@@ -5,12 +5,14 @@ description: "Tendermint使用教程"
 date: 2018-05-06
 author: MartyPang
 cover: '/assets/img/tendermint.jpg'
-tags: Tendermint BFT Blockchain
+tags: [Tendermint, BFT, Blockchain]
 ---
 
 > 如何配置使用Tendermint
 
-### Tendermint安装
+# 拜占庭容错共识Tendermint使用教程
+
+## Tendermint安装
 从[Github](https://github.com/tendermint/tendermint/releases)上下载最新二进制包（tendermint_0.22.0_linux_amd64.zip）。
 解压缩到任意位置。
 
@@ -38,7 +40,7 @@ create_empty_blocks = false
 abci = "grpc"
 ```
 
-### Tendermint使用
+## Tendermint使用
 常用命令：
 - tendermint init
 - tendermint node
@@ -46,7 +48,7 @@ abci = "grpc"
 
 tendermint init一般只使用一次，除非改了config，需要重新初始化使配置生效。在运行tendermint node之前，需要启动我们的app(即一个实现了check，deliver，commit等方法的应用)。tendermint unsafe_reset_all可以重置tendermint环境，删除区块数据。
 
-### Tendermint多节点配置
+## Tendermint多节点配置
 以A，B两个节点双节点tendermint配置为例。
 首先在A机器上，打开`$TMHOME/config`下的genesis.json文件，清空validator列表的内容。然后将priv_validator.json中的内容复制到validators列表中，复制完毕后增加一项`"power":10`。将B节点的priv_validator.json同样复制到A节点的validator列表中，也增加power配置。
 

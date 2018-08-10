@@ -5,12 +5,14 @@ description: "C++动态库加载顺序"
 date: 2017-12-10
 author: MartyPang
 cover: '/assets/img/dynamic-library.jpg'
-tags: C++ Dynamic-Library Ubuntu
+tags: [C++, Dynamic Library, Ubuntu]
 ---
 
 > Ubuntu中动态库加载顺序问题
 
-### 问题描述
+# C++动态库加载顺序
+
+## 问题描述
 编译调试系统过程中遇到这样一个问题，某个程序P运行过程中需要加载同一个动态库的两个不同版本，简称D.0与D.1。两个版本的动态库存在一些不兼容的函数，但是函数名相同，如F.0与F.1，而P的几个功能明确需要调用F.1。如何编写Makefile.am。
 
 其实问题很简单，只需要Makefile.am中动态库先写D.1再写D.0即可。比如我的问题中：
@@ -27,14 +29,14 @@ LDADD += /usr/local/lib/libcrypto.so.1.1 \
 
 在解决这个问题的过程中，引申出这样一个问题，C++动态库到底是按照怎样一个顺序被查找的。
 
-### 动态库查找顺序
+## 动态库查找顺序
 - run path: 编译时指定的动态库路径；
 - LD\_LIBRARY\_PATH: 环境变量配置的动态库查找路径；
 - ldconfig
 - /lib
 - /usr/lib
 
-### 附：man ld
+## 附：man ld
 附上官方的ld命令帮助页。
 
 
