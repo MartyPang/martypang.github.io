@@ -51,7 +51,7 @@ postPatterns: 'circuitBoard'
 sns:
   weibo: '//weibo.com/u/2796026507'
   instagram: '//www.instagram.com/_pssssssssf'
-  github: '//https://github.com/martypang'
+  github: '//www.github.com/martypang'
 
 # Tags 设置标签
 recommend-tags: true # whether or not display recommend-tags on the sidebar
