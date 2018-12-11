@@ -8,7 +8,7 @@ cover: '/assets/img/disqus-cover.png'
 tags: [Disqus, Jekyll, VPS, Nginx]
 ---
 
-> 如何配置使用Tendermint
+> 如何科学使用Disqus
 
 # Jekyll博客在墙内科学使用Disqus评论系统
 
@@ -41,12 +41,12 @@ comments:
     };
     */
     (function() { // DON'T EDIT BELOW THIS LINE
-      var d = document,
+        var d = document,
         s = d.createElement('script');
-      s.src = '{{ site.comments.disqus_url }}';
-      s.setAttribute('data-timestamp', +new Date());
+        s.src = '{{ site.comments.disqus_url }}';
+        s.setAttribute('data-timestamp', +new Date());
 
-      (d.head || d.body).appendChild(s);
+        (d.head || d.body).appendChild(s);
     })();
   </script>
   {% endif %}
@@ -157,12 +157,12 @@ define('DISQUS_APPROVED', true);
     };
     */
     (function() { // DON'T EDIT BELOW THIS LINE
-      var d = document,
+        var d = document,
         s = d.createElement('script');
-      s.src = '{{ site.comments.disqus_url }}';
-      s.setAttribute('data-timestamp', +new Date());
+        s.src = '{{ site.comments.disqus_url }}';
+        s.setAttribute('data-timestamp', +new Date());
 
-      (d.head || d.body).appendChild(s);
+        (d.head || d.body).appendChild(s);
     })();
   </script>
 ```
