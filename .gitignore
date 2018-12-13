@@ -2,5 +2,5 @@ _site.DS_Store
 */.DS_Store
 
 node_modules
-
+.jekyll-metadata
 _site
