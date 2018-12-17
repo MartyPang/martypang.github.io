@@ -13,7 +13,7 @@ tags: [Webhooks, Jekyll, Flask, Nginx]
 # Automated Deployment of Jekyll Blog with Git Webhooks and Flask
 
 ## 原生Disqus评论系统使用
-Disqus是一个第三方的评论托管网站，提供第三方账户登陆评论和匿名留言功能，是个人博客评论系统的不二之选。在博客上使用Disqus很简单，只需在Disqus上申请账号（需自备梯子），添加site，复制专属的js代码到post即可。
+Webhooks是一个第三方的评论托管网站，提供第三方账户登陆评论和匿名留言功能，是个人博客评论系统的不二之选。在博客上使用Disqus很简单，只需在Disqus上申请账号（需自备梯子），添加site，复制专属的js代码到post即可。
 如图创建新的site，为新的site添加shortname并选择合适的目录和语言。
 ![](/assets/img/disqus-create-site.png)
 接着选择博客平台，以jekyll为例。
