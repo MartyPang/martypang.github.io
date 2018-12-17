@@ -13,7 +13,7 @@ tags: [Webhooks, Jekyll, Flask, Nginx]
 # Automated Deployment of Jekyll Blog with Git Webhooks and Flask
 
 ## 原生Disqus评论系统使用
-Git Webhooks是一
+Git Webhooks是
 如图创建新的site，为新的site添加shortname并选择合适的目录和语言。
 ![](/assets/img/disqus-create-site.png)
 接着选择博客平台，以jekyll为例。
