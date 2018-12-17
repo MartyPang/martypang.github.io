@@ -21,7 +21,7 @@ Git Webhooks允许服务器接收有关对git仓库执行操作的通知，并�
 
 ### 创建一个Github Webhook
 如果你的网站托管在Github上，进入`Repo -> Settings -> Webhooks`并点击`Add Webhook`。
-![](assets/img/add-webhook.png)
+![](/assets/img/add-webhook.png)
 
 在上图的页面中，你需要配置在某些操作发生时由Github调用的URL。这里我们还需要在服务器上部署一个简单的应用来处理Github的Post请求，下一小节将会讲到。`Content type`可选json，但这里我对payload并不是很感兴趣，故采用默认的`form-urlencoded`。另外还可以提供一个密码。其`SHA-1`哈希值将添加到`X-Hub-Signature`中。更多细节可以参见Git Webhooks的[官方文档](https://developer.github.com/webhooks/)。完成配置后点击`Add webhook`即可。
 
