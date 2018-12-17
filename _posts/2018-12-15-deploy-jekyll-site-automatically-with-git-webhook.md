@@ -1,16 +1,16 @@
 ---
 layout: post
-title: '利用Git Webhooks自动部署jekyll博客'
-description: "反向代理实现墙内使用Disqus"
-date: 2018-12-08
+title: 'Automated Deployment of Jekyll Blog with Git Webhooks and Flask'
+description: "利用Git Webhooks实现jekyll博客自动化部署"
+date: 2018-12-15
 author: MartyPang
-cover: '/assets/img/disqus-cover.png'
-tags: [Disqus, Jekyll, VPS, Nginx]
+cover: '/assets/img/webhook-cover.png'
+tags: [Webhooks, Jekyll, Flask, Nginx]
 ---
 
-> 如何科学使用Disqus
+> 如何自动化部署Jekyll博客
 
-# Jekyll博客在墙内科学使用Disqus评论系统
+# Automated Deployment of Jekyll Blog with Git Webhooks and Flask
 
 ## 原生Disqus评论系统使用
 Disqus是一个第三方的评论托管网站，提供第三方账户登陆评论和匿名留言功能，是个人博客评论系统的不二之选。在博客上使用Disqus很简单，只需在Disqus上申请账号（需自备梯子），添加site，复制专属的js代码到post即可。
