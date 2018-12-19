@@ -81,7 +81,7 @@ gunicorn -b 127.0.0.1:8001 refresh:app
 ```
 这里我们绑定`localhost`的8001端口，仅能内部访问。`refresh`为python文件的名字，`app`为应用名字。
 最后我们修改Nginx配置，由于Github发送的是https请求，故我们绑定端口443。具体修改过程不再赘述，这里贴出Nginx的具体配置：
-```
+```yaml
 server {
         listen 80 default_server;
         listen [::]:80 default_server;
@@ -128,6 +128,6 @@ server {
 ## 参考博客
 - [用 Jekyll/Nginx/Let'sEncrypt 搭建一个博客站点](https://tomisacat.xyz/tech/2017/02/27/Deploy-a-blog-site-with-Jekyll-and-Nginx.html)
 - [Automate Jekyll with GitHub Webhooks](https://ryanharrison.co.uk/2018/07/05/jekyll-rebuild-github-webhook.html)
-- [ubuntu（Flask + Gunicorn + Nginx 部署](https://www.cnblogs.com/gjack/p/8066672.html)
+- [ubuntu（Flask + Gunicorn + Nginx 部署）](https://www.cnblogs.com/gjack/p/8066672.html)
 
 
