@@ -5,7 +5,7 @@ description: "MySQL数据库客户端服务端协议详述"
 date: 2018-12-19
 author: MartyPang
 cover: '/assets/img/mysql/mysql-cover.png'
-tags: [MySQL, Client, Protocol, TCP/IP]
+tags: [MySQL, Client, Protocol, TCP/IP, Mysql协议, 客户端, 服务端]
 ---
 
 > MySQL客户端协议详解

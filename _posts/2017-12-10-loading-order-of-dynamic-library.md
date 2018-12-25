@@ -5,7 +5,7 @@ description: "C++动态库加载顺序"
 date: 2017-12-10
 author: MartyPang
 cover: '/assets/img/dynamic-library.jpg'
-tags: [C++, Dynamic Library, Ubuntu]
+tags: [C++, Dynamic Library, Ubuntu, 动态库]
 ---
 
 > Ubuntu中动态库加载顺序问题

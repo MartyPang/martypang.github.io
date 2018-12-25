@@ -5,7 +5,7 @@ description: "反向代理实现墙内使用Disqus"
 date: 2018-12-08
 author: MartyPang
 cover: '/assets/img/disqus-cover.png'
-tags: [Disqus, Jekyll, VPS, Nginx]
+tags: [Disqus, Jekyll, VPS, Nginx, 云服务器, 博客, 反向代理]
 ---
 
 > 如何科学使用Disqus

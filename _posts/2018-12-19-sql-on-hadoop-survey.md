@@ -5,7 +5,7 @@ description: "在Hadoop上实现SQL功能综述"
 date: 2018-12-19
 author: MartyPang
 cover: '/assets/img/SQL-on-Hadoop/sql-on-hadoop.jpg'
-tags: [SQL, Hadoop, Survey]
+tags: [SQL, Hadoop, Survey, 综述, NoSQL]
 ---
 
 > 在Hadoop上实现SQL功能

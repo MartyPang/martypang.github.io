@@ -5,7 +5,7 @@ description: "利用Git Webhooks实现jekyll博客自动化部署"
 date: 2018-12-15
 author: MartyPang
 cover: '/assets/img/webhook-cover.png'
-tags: [Webhooks, Jekyll, Flask, Nginx]
+tags: [Webhooks, Jekyll, Flask, Nginx, 自动部署, 博客]
 ---
 
 > 如何自动化部署Jekyll博客
