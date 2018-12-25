@@ -4,7 +4,7 @@ title: '可串行化快照隔离'
 description: "Serializable Snapshot Isolation 可串行化快照隔离"
 date: 2018-12-25
 author: MartyPang
-cover: '/assets/img/ssi/ssi-cover.jpg'
+cover: '/assets/img/SSI/ssi-cover.jpg'
 tags: [Serializable, Snapshot, Isolation, 可串行化, 快照隔离, 数据库]
 ---
 
@@ -22,7 +22,7 @@ tags: [Serializable, Snapshot, Isolation, 可串行化, 快照隔离, 数据库]
 在事务型数据库系统中，事务的隔离性指的是，多个用户或者多个进程并发访问并操纵数据库时，他们发起的并发事务之间是隔离的互不影响的。换句话说，若能保证事务之间完全的隔离性，即可并发事务之间的执行结果与某个串行的调度的执行结果是一致的。这样的调度我们称为一个正确的调度。事务调度的正确性是事务系统中的一个基本问题。在保证事务调度正确性的前提下，随之而来的一个问题是，如何最大限度地提高事务的并发度，即提高数据库性能。
 传统数据库出现以来，人们针对上述两个问题做了许多的研究工作。ANSI标准尝试定义一个与实现无关的隔离级别。ANSI标准是基于表现出来的异常现象（phenomena）来定义隔离级别。这个想法很好，但是Phil Bernstein和Jim Grey等大牛表示这个标准有点问题。其一是这种定义是通过自然语言描述，不够严谨；其二是后续有多了MVCC等技术，隔离级别的定义也需要相应改动。于是几个大牛写了A Critique of ANSI SQL Isolation Levels这篇经典的论文，在ANSI标准基础上重述几个并发异常，并补充了mvcc技术出现后新的并发异常。图1是Critique论文重述之后定义的隔离等级。
 
-![full_isolation](/assets/img/ssi/full_isolation.png)
+![full_isolation](/assets/img/SSI/full_isolation.png)
 
 并发异常的定义不再赘述，详见[1]。
 
@@ -51,21 +51,21 @@ Adya在MIT的博士毕业论文[4]中提出多版本冲突串行化图（MVSG）
 
 图2为MVSG的一个示例，代表是上部分介绍的write skew异常。
 
-![mvsg](/assets/img/ssi/mvsg.png)
+![mvsg](/assets/img/SSI/mvsg.png)
 
 
 ###Dangerous Structure
 
 我们知道，一个无环的MVSG一定是冲突可串行化的。Adya进一步提出，SI下产生的MVSG中的环必定包含连续两条rw边。论文讲两个并发事务之间的rw边称为vulnerable edge，进一步，连续两条vulnerable egde构成的结构称为dangerous structure。图3为dangerous structure的一个示例。
 
-![ds](/assets/img/ssi/dangerous structure.png)
+![ds](/assets/img/SSI/dangerous structure.png)
 
 ###算法
 论文提出的算法的主要思想就是，所有的事务按照SI执行，但是DBMS提供额外的机制，动态地检测非可串行化执行的发生，然后中止相应的事务。作者在设计算法考虑到这样一个tradeoff：如果检测尽可能少的情况，那么一些非可串行化的执行仍然存在，仍然不能保证可串行化（这违背了算法的初衷）；如果检测过多的情况，那么意味着会有更多的abort出现，性能会很糟糕。首先能想到的一个naive的算法就是去检测环，中止使得MVSG成环的事务。这种算法的开销很大，每次操作都需要O(N^2)的代价去检测是否成环。作者就想，是否可以在有少量不必要的中止的前提下，降低检测算法的开销，并且同样保证可串行化。
 在Adya和Fekete的研究基础上，作者提出dangerous structure结构，并基于此实现了开销远远小于环检测的算法。算法动态去检测dangerous structure，一旦检测到就中止相应的事务。为了支持该算法，DBMS需要为每个事务维护两个布尔变量：T.inConflict，表示是否有指向T的rw依赖；T.outConflict，表示T是否有指向其他事务的rw依赖。当某个事务的T.inConflict和T.outConflict都为true时，表示算法检测到了一个dangerous structure。
 算法修改了事务处理的四个操作（begin，read，write，commit）的代码实现dangerous structure的实时检测。图4 - 图7分别是修改的代码。
 
-![4](/assets/img/ssi/4.png)
+![4](/assets/img/SSI/4.png)
 
 事务的begin操作初始化T.inConflict和T.outConflict为false。
 
@@ -73,7 +73,7 @@ Adya在MIT的博士毕业论文[4]中提出多版本冲突串行化图（MVSG）
 
 事务T在执行读操作时，首先要获得读取数据的SIREAD锁。如果数据对象x上有写锁，说明T与拥有该写锁的事务之间有一条rw依赖。随即设置T.outConflict为true，拥有写锁的事务的inConflict为true。接下来再去检测是否有连续第二条rw依赖。算法会去检测所有产生比T读取数据版本更新数据的事务的outConflict是否为true，若果为true，那么abortT。
 
-![6](/assets/img/ssi/6.png)
+![6](/assets/img/SSI/6.png)
 
 事务写操作的代码与读操作类似，同样是去检测事务是否构成了dangerous structure。
 
@@ -87,31 +87,31 @@ Adya在MIT的博士毕业论文[4]中提出多版本冲突串行化图（MVSG）
 
 该算法也存在一个弊端，就是会做一些不必要的中止，即存在假阳现象。举个例子来说，图8中，事务T0在执行w0(x)操作时，根据算法，T0.outConflict会被设置为true。事务T1在执行w1(y)操作时，T0.inConflict会被置为true。在T0提交时，算法检测到out和in均为true，于是abort T0。但事实上，图8的执行与串行化执行{TN, T0, T1}是等价的，因为T1并没有到TN的一条依赖边，也就是不存在环。
 
-![eg](/assets/img/ssi/eg.png)
+![eg](/assets/img/SSI/eg.png)
 
 ##性能
 本小节介绍该算法的性能实验。
 作者在Berkeley DB中实现了SSI算法。Berkeley DB是一个开源的嵌入式数据库，本身支持SI和S2PL实现的可串行化隔离等级。
 为了验证SSI的效果，作者选取了在SI下会发生并发异常的benchmark，SmallBank。SmallBank是对银行转账存钱应用的一个简单建模。其各个事务的依赖关系如图9所示。
 
-![smallbank](/assets/img/ssi/smallbank.png)
+![smallbank](/assets/img/SSI/smallbank.png)
 
 可以观察到，图中存在连续两条rw边，分别是Bal --> WC，和WC --> TS，并且，TS有一条指向Bal的wr边，这也就构成了环。
 
 ###短事务
 短事务的实验结果图如图10与图11所示。
 
-![short1](/assets/img/ssi/s1.png)
+![short1](/assets/img/SSI/s1.png)
 
-![short2](/assets/img/ssi/s2.png)
+![short2](/assets/img/SSI/s2.png)
 
 图10中横轴是并发访问数据库的线程数，纵轴是吞吐。图11中纵轴是错误比率。从图10中我们可以看出，SSI的性能要明显好于S2PL，在MPL为20时，SSI的性能近乎是S2PL的10倍。这是因为S2PL中的读写操作互相阻塞，并且冲突是通过死锁检测发现的，时延更长。图11表明虽然SSI的错误率比S2PL和SI都略微高了一点，但是其大部分的错误都是检测到dangerous structure而不是冲突。
 
 ###长事务
 
-![long1](/assets/img/ssi/l1.png)
+![long1](/assets/img/SSI/l1.png)
 
-![long2](/assets/img/ssi/l2.png)
+![long2](/assets/img/SSI/l2.png)
 
 长事务的实验结果中，快照隔离的性能在并发线程数大于10之后，明显的好于2PL，SSI的性能与SI的性能相较无差别。
 
