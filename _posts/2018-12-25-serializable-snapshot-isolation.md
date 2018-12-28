@@ -69,7 +69,7 @@ Adya在MIT的博士毕业论文[4]中提出多版本冲突串行化图（MVSG）
 
 事务的begin操作初始化T.inConflict和T.outConflict为false。
 
-![5](/assets/img/ssi/5.png) 
+![5](/assets/img/SSI/5.png) 
 
 事务T在执行读操作时，首先要获得读取数据的SIREAD锁。如果数据对象x上有写锁，说明T与拥有该写锁的事务之间有一条rw依赖。随即设置T.outConflict为true，拥有写锁的事务的inConflict为true。接下来再去检测是否有连续第二条rw依赖。算法会去检测所有产生比T读取数据版本更新数据的事务的outConflict是否为true，若果为true，那么abortT。
 
@@ -77,7 +77,7 @@ Adya在MIT的博士毕业论文[4]中提出多版本冲突串行化图（MVSG）
 
 事务写操作的代码与读操作类似，同样是去检测事务是否构成了dangerous structure。
 
-![7](/assets/img/ssi/7.png) 
+![7](/assets/img/SSI/7.png) 
 
 事务commit阶段，算法检测T.inConflict和T.outConflict是否均为true，若是，abort该事务。
 
