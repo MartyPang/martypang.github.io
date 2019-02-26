@@ -73,19 +73,19 @@ Adya在MIT的博士毕业论文[4]中提出多版本冲突串行化图（MVSG）
 在Adya和Fekete的研究基础上，作者提出dangerous structure结构，并基于此实现了开销远远小于环检测的算法。算法动态去检测dangerous structure，一旦检测到就中止相应的事务。为了支持该算法，DBMS需要为每个事务维护两个布尔变量：T.inConflict，表示是否有指向T的rw依赖；T.outConflict，表示T是否有指向其他事务的rw依赖。当某个事务的T.inConflict和T.outConflict都为true时，表示算法检测到了一个dangerous structure。
 算法修改了事务处理的四个操作（begin，read，write，commit）的代码实现dangerous structure的实时检测。图4 - 图7分别是修改的代码。
 
-![4](/images/20181225/SSI/4.png){:  .align-center}
+![4](/images/20181225/4.png){:  .align-center}
 
 事务的begin操作初始化T.inConflict和T.outConflict为false。
 
-![5](/images/20181225/SSI/5.png){:  .align-center}
+![5](/images/20181225/5.png){:  .align-center}
 
 事务T在执行读操作时，首先要获得读取数据的SIREAD锁。如果数据对象x上有写锁，说明T与拥有该写锁的事务之间有一条rw依赖。随即设置T.outConflict为true，拥有写锁的事务的inConflict为true。接下来再去检测是否有连续第二条rw依赖。算法会去检测所有产生比T读取数据版本更新数据的事务的outConflict是否为true，若果为true，那么abortT。
 
-![6](/images/20181225/SSI/6.png){:  .align-center}
+![6](/images/20181225/6.png){:  .align-center}
 
 事务写操作的代码与读操作类似，同样是去检测事务是否构成了dangerous structure。
 
-![7](/images/20181225/SSI/7.png){:  .align-center}
+![7](/images/20181225/7.png){:  .align-center}
 
 事务commit阶段，算法检测T.inConflict和T.outConflict是否均为true，若是，abort该事务。
 
@@ -95,7 +95,7 @@ Adya在MIT的博士毕业论文[4]中提出多版本冲突串行化图（MVSG）
 
 该算法也存在一个弊端，就是会做一些不必要的中止，即存在假阳现象。举个例子来说，图8中，事务T0在执行w0(x)操作时，根据算法，T0.outConflict会被设置为true。事务T1在执行w1(y)操作时，T0.inConflict会被置为true。在T0提交时，算法检测到out和in均为true，于是abort T0。但事实上，图8的执行与串行化执行{TN, T0, T1}是等价的，因为T1并没有到TN的一条依赖边，也就是不存在环。
 
-![eg](/images/20181225/SSI/eg.png){:  .align-center}
+![eg](/images/20181225/eg.png){:  .align-center}
 
 ## 性能
 本小节介绍该算法的性能实验。
