@@ -4,8 +4,8 @@ title: 'SQL on Hadoop Survey'
 description: "在Hadoop上实现SQL功能综述"
 author: Marty Pang
 image: 
-  path: /images/20180215/sql-on-hadoop.png
-  thumbnail: /images/20180215/sql-on-hadoop.png
+  path: /images/20180215/sql-on-hadoop.jpg
+  thumbnail: /images/20180215/sql-on-hadoop.jpg
 categories: 
   - BigData
   - Database
