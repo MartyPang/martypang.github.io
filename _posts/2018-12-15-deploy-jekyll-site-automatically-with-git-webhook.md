@@ -8,7 +8,7 @@ image:
   thumbnail: /images/20181215/webhook-cover.png
 categories: 
   - Tutorial
-  - 博客
+  - Blog
 tags: 
   - Webhooks
   - Jekyll

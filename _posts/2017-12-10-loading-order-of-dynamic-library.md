@@ -5,7 +5,6 @@ description: "C++动态链接库加载顺序"
 author: Marty Pang
 categories: 
   - C++
-  - 技术问题
 tags: 
   - C++
   - Dynamic Library

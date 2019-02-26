@@ -7,7 +7,7 @@ image:
   thumbnail: /images/20181208/disqus-cover.png
 categories: 
   - Tutorial
-  - 博客
+  - Blog
 tags: 
   - Disqus
   - Jekyll

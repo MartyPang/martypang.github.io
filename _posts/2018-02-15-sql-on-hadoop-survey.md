@@ -7,7 +7,7 @@ image:
   path: /images/20180215/sql-on-hadoop.png
   thumbnail: /images/20180215/sql-on-hadoop.png
 categories: 
-  - Big Data
+  - BigData
   - Database
 tags: 
   - SQL
