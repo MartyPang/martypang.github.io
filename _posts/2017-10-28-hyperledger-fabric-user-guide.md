@@ -1,11 +1,20 @@
 ---
 layout: post
 title: 'Hyperledger Fabric User Guide'
-description: "Hyperledger Fabric 环境配置"
-date: 2017-10-28
-author: MartyPang
-cover: '/assets/img/fabric.png'
-tags: [Hyperledger Fabric, Fabric, Blockchain, Smart Contract]
+author: Marty Pang
+image: 
+  path: /images/20171028/fabric.png
+  thumbnail: /images/20171028/fabric.png
+categories: 
+  - Blockchain
+  - Tutorial
+tags: 
+  - Hyperledger Fabric
+  - Fabric
+  - Blockchain
+  - Smart Contract
+
+last_modified_at: 2017-10-28T10:02:32-05:00
 ---
 
 > Hyperledger Fabric环境配置以及智能合约的使用

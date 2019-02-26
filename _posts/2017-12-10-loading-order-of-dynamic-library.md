@@ -1,16 +1,22 @@
 ---
 layout: post
 title: 'Loading Order of Dynamic Library in Ubuntu'
-description: "C++动态库加载顺序"
-date: 2017-12-10
-author: MartyPang
-cover: '/assets/img/dynamic-library.jpg'
-tags: [C++, Dynamic Library, Ubuntu, 动态库]
+description: "C++动态链接库加载顺序"
+author: Marty Pang
+categories: 
+  - C++
+  - 技术问题
+tags: 
+  - C++
+  - Dynamic Library
+  - Ubuntu
+  - 动态链接库
+last_modified_at: 2017-12-11T16:47:01-05:00
 ---
 
-> Ubuntu中动态库加载顺序问题
+> Ubuntu中动态链接库加载顺序问题
 
-# C++动态库加载顺序
+# C++动态链接库加载顺序
 
 ## 问题描述
 编译调试系统过程中遇到这样一个问题，某个程序P运行过程中需要加载同一个动态库的两个不同版本，简称D.0与D.1。两个版本的动态库存在一些不兼容的函数，但是函数名相同，如F.0与F.1，而P的几个功能明确需要调用F.1。如何编写Makefile.am。

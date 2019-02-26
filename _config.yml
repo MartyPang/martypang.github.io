@@ -1,66 +1,64 @@
-# Site settings 配置站点
-title: 'Hybrid Theory'
-description: 'Technical Blog Blockchain Distributed System Transaction Processing Database'
-keyword: '技术博客, 区块链, Blockchain, 分布式数据库, Distributed System, 事务处理, Technical Blog, Transaction Processing, Database, 数据库'
-url: 'https://www.hytheory.com' # your host
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 
-# if you don't need baseurl, you should leave this value blank.
-baseurl: #'https://www.hytheory.com'
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+# theme: jekyll-theme-so-simple
+# remote_theme: mmistakes/so-simple-theme
+locale: en-US
+title: "Hybrid Theory"
+description: "Technical Blog, Blockchain, Distributed System, Transaction Processing, Database."
+baseurl: # the subpath of your site, e.g. "/blog"
+url: https://www.hytheory.com # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+logo: /images/logo.svg # path of site logo, e.g. "/images/logo.png"
+date_format: "%B %-d, %Y"
+read_time: true # reading time estimates, e.g. true
+words_per_minute: 150 # 200
+mathjax: true # MathJax equations, e.g. true
+google_fonts:
+  - name: "Source Sans Pro"
+    weights: "400,400i,700,700i"
+  - name: "Lora"
+    weights: "400,400i,700,700i"
+google_analytics: UA-123706837-1 # Google Analytics id, e.g. "UA-NNNNNNNN-N"
+disqus:
+  shortname: hybridtheory # Disqus shortname, e.g. "my_disqus_shortname"
+twitter:
+  username: PangShuaifeng # site's Twitter username, e.g. "mmistakes"
 
-# Navigation links
-nav:
-  home: '/'
-  tags: '/tags.html'
-
-# Footer
-footer:
-  since: 2017
-
-# Author 配置博主信息
-author: 'Marty'
-nickname: ''
-bio: 'Blockchain, Distributed System'
-avatar: '/assets/img/profile.png'
-
-# Search
-search: true
-
-# Night mode
-nightMode: true
-
-# Comments 评论功能
-comments:
-  disqus: true
-  disqus_url: 'https://martypang.disqus.com/embed.js'
-
-# MathJax 公式支持 by Ray-Eldath
-mathjax: true
-
-# Share
-social-share: true
-social-share-items: ['wechat', 'weibo', 'douban', 'twitter']
-
-# theme color 主题皮肤
-theme-color: 'default'  # pink or default
-
-# Post header background patterns (when the post no cover): circuitBoard, overlappingCircles, food, glamorous, ticTacToe, seaOfClouds
-postPatterns: 'circuitBoard'
-
-# SNS settings 配置社交网站
-# url: email, weibo, zhihu, twitter, instagram, juejin, github, douban, facebook, dribble, uicn, jianshu, medium, linkedin
-sns:
-  weibo: '//weibo.com/u/2796026507'
-  instagram: '//www.instagram.com/_pssssssssf'
-  github: '//www.github.com/martypang'
-
-# Tags 设置标签
-recommend-tags: true # whether or not display recommend-tags on the sidebar
-recommend-condition-size: 12 # a tag will be recommended if the size of it is more than this value
+# Liquid
+liquid:
+  error_mode: strict
 
 # Build settings
-paginate: 6
-paginate_path: 'page:num'
-exclude: ['node_modules', 'dev', 'package.json', 'gulpfile.js', '.gitignore', 'README.md']
+permalink: /:categories/:title/
+markdown: kramdown
+feed:
+  path: atom.xml
+
+# Pagination - https://jekyllrb.com/docs/pagination/
+# paginate: 10
+# paginate_path: /page:num/
+
+# Search
+search_full_content: true # can have performance implications for large sites
+# Pagination - https://jekyllrb.com/docs/pagination/
+paginate: 10
+paginate_path: /page:num/
+
+# Taxonomy pages
+category_archive_path: "/categories/#"
+tag_archive_path: "/tags/#"
 
 # Markdown
 markdown: kramdown
@@ -68,12 +66,57 @@ highlighter: rouge
 kramdown:
   input: GFM
 
-# RSS
-RSS: false
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
 
-# Permalink
-# See: https://github.com/kaeyleo/jekyll-theme-H2O/issues/35
-permalink: /:year/:month/:day/:title.html
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-paginate
 
-# Plugins
-plugins: [jekyll-paginate, jekyll-sitemap, jekyll-seo-tag]
+# Front Matter Defaults
+defaults:
+  # Posts defaults
+  - scope:
+      path: "_posts"
+      type: posts
+    values:
+      layout: post
+      comments: true
+      share: true
+
+# Site Author
+author:
+  name: Marty Pang
+  picture: /images/profile.png
+  email: pang.shuaifeng@gmail.com
+  twitter: PangShuaifeng
+  links:
+    - title: Instagram
+      url: https://instagram.com/_pssssssssf
+      icon: fab fa-instagram
+    - title: GitHub
+      url: https://github.com/martypang
+      icon: fab fa-github-square
+
+# Footer Links
+footer_links:
+  - title: Instagram
+    url: https://instagram.com/_pssssssssf
+    icon: fab fa-instagram
+  - title: GitHub
+    url: https://github.com/martypang
+    icon: fab fa-github-square
+  - title: Feed
+    url: atom.xml
+    icon: fas fa-rss-square

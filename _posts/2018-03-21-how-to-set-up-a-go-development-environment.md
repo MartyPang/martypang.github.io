@@ -2,10 +2,15 @@
 layout: post
 title: 'Setting Up a Go Development Environment'
 description: "如何配置Go开发环境"
-date: 2018-03-21
-author: MartyPang
-cover: '/assets/img/go/golang.png'
-tags: [Go]
+author: Marty Pang
+image: 
+  path: /images/20180321/golang.png
+  thumbnail: /images/20180321/golang.png
+categories: 
+  - Tutorial
+tags: 
+  - Go
+last_modified_at: 2018-03-21T21:39:19-05:00
 ---
 
 > 如何配置Go语言开发环境
@@ -57,7 +62,7 @@ export PATH=$PATH:$HOME/go/bin:$GOPATH/bin
 
 当你设置完毕之后在命令行里面输入`go`，看到如下图片即说明你已经安装成功
 
-![](/assets/img/go/1.1.mac.png)
+![]({{'/images/20180321/1.1.mac.png' | absolute_url}}){: .align-center}
 
 图1.1 源码安装之后执行Go命令的图
 
@@ -119,7 +124,7 @@ i386
 
 然后执行`go`
 
-![](/assets/img/go/1.1.linux.png)
+![](/images/20180321/1.1.linux.png){: .align-center}
 
 图1.2 Linux系统下安装成功之后执行go显示的信息
 
@@ -341,7 +346,7 @@ src/
 
 Go语言自带有一套完整的命令操作工具，你可以通过在命令行中执行`go`来查看它们：
 
-  ![](/assets/img/go/1.1.mac.png)
+  ![](/images/20180321/1.1.mac.png){: .align-center}
 
 图1.3 Go命令显示详细的信息
 
@@ -689,7 +694,7 @@ vscode还有一项很强大的功能就是断点调试,结合[delve](https://git
 
 - 自动化提示代码,如下图所示
 
-  ![](/assets/img/go/1.4.sublime1.png)
+  ![](/images/20180321/1.4.sublime1.png){: .align-center}
 
   图1.5 sublime自动化提示界面
 
@@ -697,7 +702,7 @@ vscode还有一项很强大的功能就是断点调试,结合[delve](https://git
 
   - 支持项目管理
 
-  ![](/assets/img/go/1.4.sublime2.png)
+  ![](/images/20180321/1.4.sublime2.png){: .align-center}
 
   图1.6 sublime项目管理界面
 
@@ -724,7 +729,7 @@ vscode还有一项很强大的功能就是断点调试,结合[delve](https://git
 
    这个时候重启一下Sublime，可以发现在在菜单栏多了一个如下的栏目，说明Package Control已经安装成功了。
 
-  ![](/assets/img/go/1.4.sublime3.png)
+  ![](/images/20180321/1.4.sublime3.png){: .align-center}
 
 ```
 图1.7 sublime包管理
@@ -736,7 +741,7 @@ vscode还有一项很强大的功能就是断点调试,结合[delve](https://git
 
    这个时候看左下角显示正在读取包数据，完成之后出现如下界面
 
-   ![](/assets/img/go/1.4.sublime4.png)
+   ![](/images/20180321/1.4.sublime4.png){: .align-center}
 
    图1.8 sublime安装插件界面
 

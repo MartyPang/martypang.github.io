@@ -2,10 +2,14 @@
 layout: post
 title: 'Tendermint User Guide'
 description: "Tendermint使用教程"
-date: 2018-05-06
-author: MartyPang
-cover: '/assets/img/tendermint.jpg'
-tags: [Tendermint, BFT, Blockchain]
+author: Marty Pang
+categories: 
+  - Blockchain
+  - Tutorial
+tags: 
+  - Tendermint
+  - BFT
+last_modified_at: 2018-05-06T18:53:22-05:00
 ---
 
 > 如何配置使用Tendermint

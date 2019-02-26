@@ -1,0 +1,19 @@
+# Sample Authors
+# Remove file or replace with your own
+
+Marty Pang:
+  name: Marty Pang
+  picture: /images/profile.png
+  twitter: "PangShuaifeng"
+  links:
+    - title: Instagram
+      url: https://instagram.com/_pssssssssf
+      icon: fab fa-instagram
+    - title: GitHub
+      url: https://github.com/martypang
+      icon: fab fa-github-square
+
+# Cornelius Fiddlebone:
+#   name: Cornelius Fiddlebone
+#   picture: /images/bio-photo.jpg
+#   twitter: corneliusfiddlebone

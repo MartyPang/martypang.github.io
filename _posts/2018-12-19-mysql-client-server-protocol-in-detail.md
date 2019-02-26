@@ -2,13 +2,19 @@
 layout: post
 title: 'MySQL Client/Server Protocol in Detail'
 description: "MySQL数据库客户端服务端协议详述"
-date: 2018-12-19
-author: MartyPang
-cover: '/assets/img/mysql/mysql-cover.png'
-tags: [MySQL, Client, Protocol, TCP/IP, Mysql协议, 客户端, 服务端]
+author: Marty Pang
+categories: 
+  - Database
+tags: 
+  - MySQL
+  - Client
+  - TCP/IP
+  - Protocol
+  - Mysql协议
+  - 客户端
+  - 服务端
+  - 通信
 ---
-
-> MySQL客户端协议详解
 
 # MySQL Client/Server Protocol in Detail
 最近在做的一个系统项目需要支持MySQL客户端，遂研究了MySQL C/S 协议。MySQL实现了四种通信协议，包括：
@@ -20,7 +26,7 @@ tags: [MySQL, Client, Protocol, TCP/IP, Mysql协议, 客户端, 服务端]
 
 ## 协议模型结构
 下图给出MySQL通信协议从最上层应用层到底层数据传输层的模型结构：
-![](/assets/img/mysql/network_model.png)
+![](/images/20181219/network_model.png){:  .align-center}
 
 从上至下分别是：
 - 应用层：客户端应用程序和服务端应用程序
@@ -80,11 +86,11 @@ MySQL握手初始化包的消息体结构如下图：
 
 ###a. auth包
 客户端登录认证包的消息体结构如下图：
-![](/assets/img/mysql/auth.png?raw=true)
+![](/images/20181219/auth.png?raw=true){:  .align-center}
 
 ###b. command包
 客户端命令请求包的消息体结构如下图：
-![](/assets/img/mysql/command.png?raw=true)
+![](/images/20181219/command.png?raw=true){:  .align-center}
 
 - 命令：用来标志当前请求消息的类型。命令的取值范围及说明如下表所示（mysql源码/include/my_command.h）：
 

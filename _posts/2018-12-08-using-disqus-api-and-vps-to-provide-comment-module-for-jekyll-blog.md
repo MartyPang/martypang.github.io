@@ -1,23 +1,36 @@
 ---
 layout: post
 title: '在境外VPS上搭建反向代理转发Disqus API 请求'
-description: "反向代理实现墙内使用Disqus"
-date: 2018-12-08
-author: MartyPang
-cover: '/assets/img/disqus-cover.png'
-tags: [Disqus, Jekyll, VPS, Nginx, 云服务器, 博客, 反向代理]
+author: Marty Pang
+image: 
+  path: /images/20181208/disqus-cover.png
+  thumbnail: /images/20181208/disqus-cover.png
+categories: 
+  - Tutorial
+  - 博客
+tags: 
+  - Disqus
+  - Jekyll
+  - VPS
+  - Nginx
+  - 云服务器
+  - 博客
+  - 反向代理
+last_modified_at: 2018-12-09T12:32:59-05:00
 ---
 
-> 如何科学使用Disqus
+> 如何科学使用Disqus？
+>
+> Disqus是一个第三方的评论托管网站，提供第三方账户登陆评论和匿名留言功能，是个人博客评论系统的不二之选。在博客上使用Disqus很简单，只需在Disqus上申请账号（需自备梯子），添加site，复制专属的js代码到post即可...
 
 # Jekyll博客在墙内科学使用Disqus评论系统
 
 ## 原生Disqus评论系统使用
 Disqus是一个第三方的评论托管网站，提供第三方账户登陆评论和匿名留言功能，是个人博客评论系统的不二之选。在博客上使用Disqus很简单，只需在Disqus上申请账号（需自备梯子），添加site，复制专属的js代码到post即可。
 如图创建新的site，为新的site添加shortname并选择合适的目录和语言。
-![](/assets/img/disqus-create-site.png)
+![](/images/20181208/disqus-create-site.png)
 接着选择博客平台，以jekyll为例。
-![](/assets/img/disqus-jekyll.png)
+![](/images/20181208/disqus-jekyll.png)
 
 首先在jekyll项目的`_config.yml`配置文件中设置comment选项为true，并配置shortname。
 ```yaml
@@ -28,8 +41,7 @@ comments:
 ```
 
 接着在`_layouts/post.html`文件中添加如下js，即可正常使用Disqus评论功能。
-```javascript
-  {% if site.comments.disqus %}
+```html
   <script>
     /**
      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
@@ -49,7 +61,6 @@ comments:
         (d.head || d.body).appendChild(s);
     })();
   </script>
-  {% endif %}
 ```
 
 最后，如果你在一个可以访问Disqus评论的环境或者你的用户也均可访问Disqus，请忽略本文以下内容:)。
