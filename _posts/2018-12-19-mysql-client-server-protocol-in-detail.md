@@ -72,7 +72,7 @@ stage1_hash = token XOR SHA1(scramble + mysql.user.password) = token XOR PASSWOR
 
 ###a. 握手初始化包
 MySQL握手初始化包的消息体结构如下图：
-![](/assets/img/mysql/handshake.png?raw=true)
+![](/images/20181219/handshake.png?raw=true){:  .align-center}
 
 - 协议版本号：由宏PROTOCOL_VERSION定义（mysql源码/include/mysql_version.h）
 - 服务器版本信息：由宏MYSQL_SERVER_VERSION定义（mysql源码/include/mysql_version.h）
