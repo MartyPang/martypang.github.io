@@ -16,7 +16,6 @@ tags:
   - 通信
 ---
 
-# MySQL Client/Server Protocol in Detail
 最近在做的一个系统项目需要支持MySQL客户端，遂研究了MySQL C/S 协议。MySQL实现了四种通信协议，包括：
 - TCP/IP
 - Unix Socket协议
