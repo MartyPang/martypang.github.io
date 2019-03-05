@@ -1,12 +1,14 @@
 ---
 title: Résumé
-layout: page
+layout: cv
 permalink: /resume/
 sitemap: false
 ---
 
 # 中文简历
-<iframe src="/pdf/cv_cn.pdf" style="width:100%; height:1000px;" frameborder="0"></iframe>
+<div class="pdf-wrapper">
+<iframe src="/pdf/cv_cn.pdf"  frameborder="0"></iframe>
+</div>
 
 # CV in English
 TODO

@@ -209,7 +209,8 @@
 .layout--category,
 .layout--tag,
 .layout--collection,
-.layout--search {
+.layout--search 
+.layout--cv {
   .page-wrapper {
     max-width: $main-max-width;
   }
@@ -284,4 +285,20 @@
   .page-wrapper {
     max-width: $main-sidebar-max-width;
   }
+}
+
+.pdf-wrapper {
+    position: relative;
+    padding-bottom: 130%;
+    /*padding-top: 35px;*/
+    height: 0;
+    overflow: hidden;
+}
+
+.pdf-wrapper iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
