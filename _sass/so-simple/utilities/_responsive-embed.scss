@@ -64,3 +64,9 @@
     padding-top: percentage(1 / 1);
   }
 }
+
+.responsive-embed-10by13 {
+  &::before {
+    padding-top: percentage(13 / 10);
+  }
+}

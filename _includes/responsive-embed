@@ -7,6 +7,8 @@
     {%- assign ratio_class = 'responsive-embed-4by3' -%}
   {%- when '1:1' -%}
     {%- assign ratio_class = 'responsive-embed-1by1' -%}
+  {%- when '10:13' -%}
+    {%- assign ratio_class = 'responsive-embed-10by13' -%}
   {%- else -%}
     {%- assign ratio_class = 'responsive-embed-16by9' -%}
 {%- endcase -%}

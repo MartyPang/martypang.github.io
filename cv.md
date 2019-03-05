@@ -6,9 +6,8 @@ sitemap: false
 ---
 
 # 中文简历
-<div class="pdf-wrapper">
-<iframe src="/pdf/cv_cn.pdf"  frameborder="0"></iframe>
-</div>
+
+{% include responsive-embed url="/pdf/cv_cn.pdf" ratio="10:13" %}
 
 # CV in English
 TODO
