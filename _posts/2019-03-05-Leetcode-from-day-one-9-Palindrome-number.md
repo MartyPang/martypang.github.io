@@ -11,11 +11,11 @@ last_modified_at: 2019-03-05T10:04:37-05:00
 
 本题是LeetCode简单难度第九题[回文数](https://leetcode.com/problems/palindrome-number/description/)，这里仍然先给出题目与相应的提示与要求。
 
-> 给定一个整数x，判断其是否位回文数。
-> Example: 
-> 	Input: 121
-> 	Output: true
-> 能否在不转为字符串的情况下实现（额外的存储空间）？
+> 给定一个整数x，判断其是否位回文数。  
+> Example:   
+> 	Input: 121  
+> 	Output: true  
+> 能否在不转为字符串的情况下实现（额外的存储空间）？  
 
 鉴于[Reverse Integer](https://www.hytheory.com/algorithm/Leetcode-from-day-one-7-Reverse-Integer/)这篇文章中介绍了如何反转一个数组，这里很容易就能想到的方法就是比较反转前与反转后的数字。
 
