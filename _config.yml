@@ -60,6 +60,12 @@ paginate_path: /page:num/
 category_archive_path: "/categories/#"
 tag_archive_path: "/tags/#"
 
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /:collection/:path/
+
 # Markdown
 markdown: kramdown
 highlighter: rouge
@@ -90,6 +96,13 @@ defaults:
   - scope:
       path: "_posts"
       type: posts
+    values:
+      layout: post
+      comments: true
+      share: true
+  - scope:
+      path: "_projects"
+      type: projects
     values:
       layout: post
       comments: true
