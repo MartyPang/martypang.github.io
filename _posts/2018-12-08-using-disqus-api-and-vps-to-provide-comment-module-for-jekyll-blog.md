@@ -28,9 +28,9 @@ last_modified_at: 2018-12-09T12:32:59-05:00
 ## 原生Disqus评论系统使用
 Disqus是一个第三方的评论托管网站，提供第三方账户登陆评论和匿名留言功能，是个人博客评论系统的不二之选。在博客上使用Disqus很简单，只需在Disqus上申请账号（需自备梯子），添加site，复制专属的js代码到post即可。
 如图创建新的site，为新的site添加shortname并选择合适的目录和语言。
-![](/images/20181208/disqus-create-site.png)
+![](/images/20181208/disqus-create-site.png){:  .align-center}
 接着选择博客平台，以jekyll为例。
-![](/images/20181208/disqus-jekyll.png)
+![](/images/20181208/disqus-jekyll.png){:  .align-center}
 
 首先在jekyll项目的`_config.yml`配置文件中设置comment选项为true，并配置shortname。
 ```yaml
