@@ -11,7 +11,7 @@ last_modified_at: 2019-03-11T10:18:09-05:00
 
 周末刷了两个简单的加法题，[66题整形数组加1](https://leetcode.com/problems/plus-one/description/)和[67题二进制数的加法](https://leetcode.com/problems/add-binary/description/)。题目解法比较类似，注意点都是要考虑进位，故在此做一个简单总结。
 
-# 整型数据加1
+# 整型数组加1
 
 > 给定一个非空的整形数组，每个元素代表0-9，返回该数组加1后的结果。假设数组不包含任何前导0。
 > Example: 
