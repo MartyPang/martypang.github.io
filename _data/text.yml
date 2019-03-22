@@ -35,6 +35,8 @@ en-GB:
   <<: *DEFAULT_EN
 en-AU:
   <<: *DEFAULT_EN
+zh-CN:
+  <<: *DEFAULT_EN
 
 
 # German

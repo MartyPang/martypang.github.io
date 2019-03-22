@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 # theme: jekyll-theme-so-simple
 # remote_theme: mmistakes/so-simple-theme
-locale: en-US
+locale: zh-CN
 title: "Hybrid Theory"
 description: "Technical Blog, Blockchain, Distributed System, Transaction Processing, Database."
 baseurl: # the subpath of your site, e.g. "/blog"
