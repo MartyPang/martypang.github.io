@@ -13,9 +13,9 @@ last_modified_at: 2019-03-08T10:35:19-05:00
 本篇博文介绍LeetCode简单难度[53题最大子数组](https://leetcode.com/problems/maximum-subarray/description/)的几种解法。最大子数组问题也是一个算法中的一个经典问题。首先给出题目描述。
 
 > 给定一个整数数组，寻找和最大的连续子数组（至少包含一个元素）。
-> Example: 
+> Example:   
 &nbsp; &nbsp; Input: [-2,1,-3,4,-1,2,1,-5,4]  
-&nbsp; &nbsp; Output: 6
+&nbsp; &nbsp; Output: 6  
 &nbsp; &nbsp; Explanation: 子数组[4,-1,2,1]的和最大，为6
 
 博主总结了该问题的三种解法，分别是：
