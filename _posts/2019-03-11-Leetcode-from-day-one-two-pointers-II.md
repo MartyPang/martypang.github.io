@@ -168,6 +168,29 @@ public class Solution {
 ```
 第二趟遍历的循环跳出条件要么是两个同时走到`null`要么走到交汇节点，无需别的判断，并不会陷入死循环。
 
+# Two Sum II
+
+在LeetCode上刷的第一题就是[Two Sum](https://leetcode.com/problems/two-sum/description)题，这是第二个版本，把无须的输入数组改为排好序的数组。思路比较简单，一左一右两个指针相向而行。如果当前指向的两个数的和小于`target`，说明左指针指的值小了，往右走一个；反之，右指针往左走一个。如此往复，直到和等于target或者左右指针指向同一个值，程序退出。
+
+```java
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int[] res = new int[2];
+        int left = 0, right = numbers.length-1;
+        while(left != right) {
+            if(numbers[left] + numbers[right] < target) ++left;
+            else if(numbers[left] + numbers[right] > target) --right;
+            else {
+                res[0] = ++left;
+                res[1] = ++right;
+                break;
+            }
+        }
+        return res;
+    }
+}
+```
+
 # 总结
 
 碰上需要遍历的题，考虑使用双指针，但也不能死板的只知道从头到尾遍历，形式可以多样，正过来，倒过来，一个快，一个慢等等。
