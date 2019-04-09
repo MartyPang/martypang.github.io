@@ -293,7 +293,32 @@ a ^= b;
 利用位操作可变换整数的符号，只需对数取反再加1，`~x+1`。
 
 **最右边的1**
-`x&(x-1)`可以消去最右边的1。利用这个技巧可以判断一个数是否为2的幂。思路是一个数如果是2的幂次，一定大于0并且二进制表示只包含一个1。利用`x&(x-1)`消去最右边的1之后应该返回0。
+`x&(x-1)`可以消去最右边的1。利用这个技巧可以判断一个数是否为2的幂（LeetCode简单难度[231题Power of Two](https://leetcode.com/problems/power-of-two/description/)）。思路是一个数如果是2的幂次，一定大于0并且二进制表示只包含一个1。利用`x&(x-1)`消去最右边的1之后应该返回0。
+
+```java
+class Solution {
+    /**
+     * Iterative
+     */
+    // public boolean isPowerOfTwo(int n) {
+    //     if(n == 1) return true;
+    //     long power = 1;
+    //     while(power < n) {
+    //         power *= 2;
+    //         if(power == n) return true;
+    //     }
+    //     return false;
+    // }
+
+    /**
+     * Bit manipulation
+     */
+    public boolean isPowerOfTwo(int n) {
+        if(n <= 0) return false;
+        return (n&(n-1)) == 0;
+    }
+}
+```
 
 **低位到高位取第k位**
 使用右移操作，`(x>>(k-1))&1`。
@@ -306,5 +331,6 @@ a ^= b;
 # 参考
 
 [深入Java中的位操作](https://www.cnblogs.com/datiangou/p/10229907.html)
+
 [Basics of Bit Manipulation](https://www.hackerearth.com/zh/practice/basic-programming/bit-manipulation/basics-of-bit-manipulation/tutorial/)
 
