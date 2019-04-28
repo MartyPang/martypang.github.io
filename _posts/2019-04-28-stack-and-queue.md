@@ -16,7 +16,7 @@ last_modified_at: 2019-04-28T10:59:28-05:00
 
 栈是遵循LIFO/FILO的数据集合，LIFO即Last In First Out，FILO即First In Last Out，后进先出/先进后出原则。之所以称这种数据结构为堆栈，是因为它非常像现实世界的一副牌或一堆盘子。
 
-![stack representation](/images/20190428/stack.jpg){: .align-center}
+![stack representation](/images/20190428/stack.jpg)
 
 对栈的插入与删除只能在数据结构的一端进行，我们称之为`top`，顶部。插入元素操作叫做`push`，删除则为`pop`。Java与C++均提供栈的实现。Java的集合框架中Stack类继承Vector类。C++中STL也提供stack的实现，引入头文件`#include <stack>`即可。我们也可以子集实现一个栈。栈可以通过数组和链表实现，可以是固定大小的也可以是动态调整大小的。
 
@@ -179,7 +179,7 @@ public class LinkedListStack<Item> implements MyStack<Item> {
 
 与栈不同的是，队列是遵循FIFO（先进先出）原则的数据结构，即队列中先插入的元素先出队。这与现实生活中的排队现象是一致的。
 
-![queue representation](/images/20190428/queue.png){: .align-center}
+![queue representation](/images/20190428/queue.png)
 
 队列支持入队，出队，返回队首元素操作。同样队列可以使用数组与链表实现，但是普通数组的实现比较低效，元素出队后无法重复利用内存（可以改进使用循环数组）。本文给出链表实现队列。事实上Java中的Queue也是LinkedList双向链表实现的。
 
@@ -396,7 +396,7 @@ class MyQueue {
 
 ## Min Stack
 
-本题要求涉及一个栈，支持`push`，`pop`，`top`以及在常量时间内获取栈的最小元素。
+[本题](https://leetcode.com/problems/min-stack/description/)要求设计一个栈，支持`push`，`pop`，`top`以及在常量时间内获取栈的最小元素。
 
 ```java
 MinStack minStack = new MinStack();
