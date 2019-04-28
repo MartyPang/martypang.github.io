@@ -16,7 +16,7 @@ last_modified_at: 2019-04-28T10:59:28-05:00
 
 栈是遵循LIFO/FILO的数据集合，LIFO即Last In First Out，FILO即First In Last Out，后进先出/先进后出原则。之所以称这种数据结构为堆栈，是因为它非常像现实世界的一副牌或一堆盘子。
 
-![stack representation](/images/20190422/stack.jpg)
+![stack representation](/images/20190428/stack.jpg)
 
 对栈的插入与删除只能在数据结构的一端进行，我们称之为`top`，顶部。插入元素操作叫做`push`，删除则为`pop`。Java与C++均提供栈的实现。Java的集合框架中Stack类继承Vector类。C++中STL也提供stack的实现，引入头文件`#include <stack>`即可。我们也可以子集实现一个栈。栈可以通过数组和链表实现，可以是固定大小的也可以是动态调整大小的。
 
@@ -265,10 +265,10 @@ public class LinkedListQueue<Item> implements MyQueue<Item> {
 
 > 给定一个只包含'('，')'，'['，']'，'{'和'}'的字符串，实验一个函数判断括号是否匹配。匹配的条件是一个左括号必须有一个对应的右括号，并且顺序要对。
 > Example：  
-&nbsp; &nbsp; Input: "()"  
-&nbsp; &nbsp; Output: true  
-&nbsp; &nbsp; Input: "([)]"  
-&nbsp; &nbsp; Output: false  
+> &nbsp; &nbsp; Input: "()"  
+> &nbsp; &nbsp; Output: true  
+> &nbsp; &nbsp; Input: "([)]"  
+> &nbsp; &nbsp; Output: false  
 
 利用栈先进后出的性质，遇上左括号入栈，右括号出栈，判断是否匹配即可。
 
@@ -350,4 +350,97 @@ class MyStack {
 }
 ```
 
+而针对[232题利用栈实现队列](https://leetcode.com/problems/implement-queue-using-stacks/description/)，我们使用两个栈，push操作时，先把栈1的所有值pop掉，并push到栈2中，再将元素push到栈1。栈2的元素再依次push回栈1。这样操作的目的是是的push到队列的元素在尾部。
 
+
+```java
+class MyQueue {
+
+    Stack<Integer> stack1;
+    Stack<Integer> stack2;
+    
+
+    /** Initialize your data structure here. */
+    public MyQueue() {
+        stack1 = new Stack<>();
+        stack2 = new Stack<>();
+    }
+    
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+        while(!stack1.isEmpty()) {
+            stack2.push(stack1.pop());
+        }
+        stack1.push(x);
+        while(!stack2.isEmpty()) {
+            stack1.push(stack2.pop());
+        }
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        return stack1.pop();
+    }
+    
+    /** Get the front element. */
+    public int peek() {
+        return stack1.peek();
+    }
+    
+    /** Returns whether the queue is empty. */
+    public boolean empty() {
+        return stack1.isEmpty();
+    }
+}
+```
+
+## Min Stack
+
+本题要求涉及一个栈，支持`push`，`pop`，`top`以及在常量时间内获取栈的最小元素。
+
+```java
+MinStack minStack = new MinStack();
+minStack.push(-2);
+minStack.push(0);
+minStack.push(-3);
+minStack.getMin();   --> Returns -3.
+minStack.pop();
+minStack.top();      --> Returns 0.
+minStack.getMin();   --> Returns -2.
+```
+
+解决思路就是在最小值后面跟一个第二小的值，这样当最小值被pop时，下一个就是当前最小值，无需遍历栈重新计算最小值。
+
+```java
+class MinStack {
+
+    private Stack<Integer> stack;
+    private int min;
+
+    /** initialize your data structure here. */
+    public MinStack() {
+        stack = new Stack<>();
+        min = Integer.MAX_VALUE;
+    }
+    
+    public void push(int x) {
+        if(x <= min) {
+            stack.push(min);
+            min = x;
+        }
+        stack.push(x);
+    }
+    
+    public void pop() {
+        if(stack.pop() == min) min = stack.pop();
+    }
+    
+    public int top() {
+        return stack.peek();
+    }
+    
+    public int getMin() {
+        return min;
+    }
+}
+```
