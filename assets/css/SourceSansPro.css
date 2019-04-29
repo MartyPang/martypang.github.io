@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Source Sans Pro Italic'), local('SourceSansPro-Italic'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Italic.ttf) format('truetype'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Italic.woff) format('woff'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Italic.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Source Sans Pro Bold Italic'), local('SourceSansPro-BoldItalic'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Bold-Italic.ttf) format('truetype'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Bold-Italic.woff) format('woff'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Bold-Italic.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/Source Sans Pro/Source-Sans-Pro-Regular.eot);
+  src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), local('Source Sans Pro'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Regular.ttf) format('truetype'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Regular.woff) format('woff'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Regular.svg#SourceSansPro) format('svg'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Regular.woff2) format('woff2'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Regular.eot?#iefix) format('embedded-opentype');
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Bold.ttf) format('truetype'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Bold.woff) format('woff'), url(../fonts/Source Sans Pro/Source-Sans-Pro-Bold.woff2) format('woff2');
+}
+
