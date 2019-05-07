@@ -35,9 +35,11 @@
 
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   {% if site.google_fonts %}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={%- for font in site.google_fonts -%}{{ font.name | replace: ' ', '+' }}{% if font.weights %}:{% endif %}{{ font.weights | remove: ' ' }}{% if forloop.last != true %}|{% endif %}{%- endfor -%}">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={%- for font in site.google_fonts -%}{{ font.name | replace: ' ', '+' }}{% if font.weights %}:{% endif %}{{ font.weights | remove: ' ' }}{% if forloop.last != true %}|{% endif %}{%- endfor -%}"> -->
     <!-- <link rel="stylesheet" type="text/css" href="/assets/css/SourceSansPro.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/Lora.css" /> -->
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/googlefonts.css" />
   {% endif %}
 
   {%- if site.plugins contains 'jekyll-feed' or site.gems contains 'jekyll-feed' -%}
