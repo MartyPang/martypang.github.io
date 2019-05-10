@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[LeetCode From Day One] - Subtree of Another tree'
+title: '[LeetCode From Day One] - 572. Subtree of Another tree'
 author: Marty Pang
 categories: 
   - Algorithm
@@ -14,9 +14,9 @@ last_modified_at: 2019-05-09T16:46:20-05:00
 
 > 给定两颗非空的二叉树`s`与`t`，写一个函数判断`t`是否与`s`的某颗子树有着相同的结构。
 > Example: given tree s and t:   
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4  
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4  
 &nbsp; &nbsp; &nbsp; &nbsp; /&nbsp;  \  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; / &nbsp; \   
-&nbsp; &nbsp; &nbsp; 4 &nbsp; &nbsp; &nbsp; 5  &nbsp; &nbsp; &nbsp; 1 &nbsp; &nbsp; 2  
+&nbsp; &nbsp; &nbsp; 4 &nbsp; &nbsp; &nbsp; 5  &nbsp; &nbsp;  1 &nbsp; &nbsp; 2  
 &nbsp; &nbsp; / &nbsp; \   &nbsp; &nbsp; &nbsp;  
 &nbsp; 1 &nbsp; &nbsp; 2  &nbsp; &nbsp; &nbsp;  
 Output: true
