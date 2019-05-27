@@ -104,5 +104,5 @@ class Solution {
 
 ## 相关文章
 
-[树的基本问题](https://www.hytheory.com/algorithm/Leetcode-from-day-one-basic-data-structure-tree/)
+[树的基本问题](https://www.hytheory.com/algorithm/Leetcode-from-day-one-basic-data-structure-tree/)   
 [树的子树](https://www.hytheory.com/algorithm/LeetCode-from-day-one-572-subtree-of-another-tree/)
