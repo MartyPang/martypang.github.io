@@ -23,7 +23,7 @@ last_modified_at: 2019-05-27T18:56:21-05:00
 &nbsp; &nbsp; / &nbsp; \    
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2  
 &nbsp; &nbsp; &nbsp; &nbsp; /
-&nbsp; &nbsp; &nbsp; 1
+&nbsp; &nbsp; &nbsp; 1   
 Output: 
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3   
 &nbsp; &nbsp; &nbsp; &nbsp; /    
