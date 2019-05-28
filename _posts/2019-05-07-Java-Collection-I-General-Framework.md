@@ -12,7 +12,7 @@ last_modified_at: 2019-05-07T14:25:09-05:00
 Java的Collection框架是对集合的高度抽象，围绕一组标准接口而设计，其包含一些列的接口以及对应的实现，并且提供几个工具类实现包括排序功能等算法。正确应用Collection框架能够大大方便编程人员的开发。本文以及后序的Java Collection系列文章会详细分析每个接口与类。
 
 ![CollectionModel](/images/20190507/CollectionModel.png){:	.align-center}
-<p align=center size=2>Collection总体框架图</p>
+<center>Collection总体框架图<center>
 
 Java集合主要有List集合，Set集合，Map映射以及工具类（Arrays，Collections，Iterator），上图是继承Collection接口的类。Map不继承Collection，框架图如下。
 
