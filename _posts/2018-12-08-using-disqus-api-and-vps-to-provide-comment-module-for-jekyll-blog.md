@@ -79,11 +79,13 @@ comments:
 
 #### 0. 安装Nginx和PHP服务
 不同服务器系统安装配置nginx和php大同小异，这里以Ubuntu 16.04为例，直接使用apt安装nginx和php。
+
 ```shell
 sudo apt-get install nginx php-fpm php-mysql
 ```
 
 php有个安全漏洞，需要配置cgi默认安全配置，设置`php.ini`的`cgi.fix-pathinfo`选项值为1即可。
+
 ```shell
 sudo vim /etc/php/fpm/php.ini
 # vim搜索cgi.fix-pathinfo
@@ -92,11 +94,27 @@ sudo vim /etc/php/fpm/php.ini
 cgi.fix-pathinfo=0
 ```
 
+另外还需安装php curl扩展，否则会报500错误。首先查看相应版本的php支持的curl名。
+
+```shell
+suod apt-cache search curl | grep php
+```
+
+![](/images/20181208/php.png){:  .align-center}
+
+以7.为例，如上图，我们安装`php7.0-curl`
+
+```shell
+sudo apt-get install curl libcurl3 libcurl3-dev php7.0-curl
+```
+
 之后配置Nginx。
+
 ```shell
 sudo vim /etc/nginx/sites-available/default
 ```
 修改default文件如下，`domain_or_ip`指定使用PHP processor。
+
 ```
 server {
     listen 80 default_server;
@@ -122,17 +140,20 @@ server {
 }
 ```
 保存，重载nginx服务。
+
 ```shell
 sudo systemctl reload nginx
 ```
 
 #### 1. 部署disqus-php-api
 首先将disqus-php-api代码clone到本地。
+
 ```shell
 git clone https://github.com/fooleap/disqus-php-api.git
 ```
 
 将api目录下的php文件拷贝到Nginx配置文件中所示的root目录下（`/var/www/html`）即可。
+
 ```shell
 cp -r ./disqus-php-api/api/* /var/www/html
 # 进入root目录以便后续操作
@@ -140,6 +161,7 @@ cd /var/www/html
 ```
 
 目录下`config.php`为调用官方disqus api所需的配置文件。主要修改如下字段：
+
 ```
 define('DISQUS_PUBKEY', 'pubkey');
 define('DISQUS_USERNAME', 'martypang');
@@ -156,6 +178,7 @@ define('DISQUS_APPROVED', true);
 之前我们已经讲了如何配置原生的disqus，加入一段js即可。使用fooleap的php api实现反向代理的disqus也很简单。首先把clone下来的代码中的dist文件夹下的`iDisqus.min.css`，`iDisqus.min.css.map`，`iDisqus.min.js`和`iDisqus.min.js.map`放入jekyll博客的相应目录即可（分别复制到`/assets/css/`和`assets/js/`）。然后在相应的html头部引入。
 
 接着把原生disqus配置的js：
+
 ```javascript
   <script>
     /**
@@ -178,6 +201,7 @@ define('DISQUS_APPROVED', true);
   </script>
 ```
 直接替换如下即可：
+
 ```javascript
 <div id="comment"></div>
 <script type="text/javascript">
@@ -195,5 +219,6 @@ define('DISQUS_APPROVED', true);
   });
 </script>
 ```
+
 `iDisqus`具体的配置详见[项目仓库](https://github.com/fooleap/disqus-php-api)。`mode`为1表示检测能否访问 Disqus，若能则加载 Disqus 原生评论框，超时则加载简易评论框。
 
