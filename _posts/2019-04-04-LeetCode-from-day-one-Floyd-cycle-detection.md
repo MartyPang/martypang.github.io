@@ -18,7 +18,7 @@ Floyd环路检测算法，又称龟兔赛跑算法（Tortoise and Hare Algorithm
 对FSM与链表应用Floyd Cycle Detection算法，可以判断从某个初态/起点开始是否会返回到一个已访问过的状态/节点。而对于迭代函数来说，则可以判断其是否存在周期，以及求出最小正周期。下面以几个LeetCode题目为例，用代码解释Floyd环路算法。
 
 # Linked List Cycle
-本题在之前的[双指针II](http://localhost:4000/algorithm/Leetcode-from-day-one-two-pointers-II/)其实已经介绍过，是对Floyd Cycle Detection算法最直观的解释，对题目解法不再详述，这里仅结合本例解释算法如何求得环长度以及相遇点。
+本题在之前的[双指针II](https://www.hytheory.com/algorithm/Leetcode-from-day-one-two-pointers-II/)其实已经介绍过，是对Floyd Cycle Detection算法最直观的解释，对题目解法不再详述，这里仅结合本例解释算法如何求得环长度以及相遇点。
 
 ![linkedlist](/images/20190404/linkedlist.png){:  .align-center} 
 

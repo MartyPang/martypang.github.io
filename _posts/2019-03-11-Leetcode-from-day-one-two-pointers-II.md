@@ -91,7 +91,7 @@ public class Solution {
             fast = fast.next;
             if(slow != null && fast != null && fast.next != null) {
                 fast = fast.next;
-                if(slow.val == fast.val) return true;
+                if(slow == fast) return true;
             }
             else break;
 
