@@ -10,7 +10,7 @@ tags:
 last_modified_at: 2019-06-21T14:28:21-05:00
 ---
 
-之前的一篇介绍单链表数据结构文章中，讲过反转链表的迭代算法和递归算法。递归的基本思路是利用递归栈走到链表的尾部，从尾部开始向前反转。
+之前的一篇介绍单链表数据结构文章中，讲过反转链表的迭代算法和递归算法。递归的基本思路是利用递归栈走到链表的尾部，从尾部开始向前反转。本文完整代码见[GitHub](<https://github.com/MartyPang/DataStructures/blob/master/src/main/java/ecnu/dase/list/MyLinkedList.java>)。
 
 ```java
 class Solution {
