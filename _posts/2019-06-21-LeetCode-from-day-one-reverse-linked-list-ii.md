@@ -24,14 +24,14 @@ class Solution {
 }
 ```
 
-该递归算法最关键的两行代码在于：
+若`head.next == null`，说明该head为反转链表的新头部。该递归算法最关键的两行代码在于：
 
 ```java
 head.next.next = head;
 head.next = null;
 ```
 
-
+这两行代码反转指针，并把当前head的next置为空。
 
 本文介绍上述基本链表反转问题的两个扩展问题，分别是反转链表的前n个节点，以及反转链表从位置`m`到位置`n`的节点。
 
