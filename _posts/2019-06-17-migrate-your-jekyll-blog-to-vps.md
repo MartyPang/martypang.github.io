@@ -115,7 +115,7 @@ gem install jekyll bundler
 
 # Install Nginx
 
-本身`jekyll server`命令即可开启站点服务，但由于服务器上用Nginx部署了调用disqus API的服务（详见[]()），索性jekyll站点也用Nginx做服务。
+本身`jekyll server`命令即可开启站点服务，但由于服务器上用Nginx部署了调用disqus API的服务（详见[科学使用Disqus](https://www.hytheory.com/tutorial/blog/using-disqus-api-and-vps-to-provide-comment-module-for-jekyll-blog/)），索性jekyll站点也用Nginx做服务。
 
 安装Nginx很简单：
 
