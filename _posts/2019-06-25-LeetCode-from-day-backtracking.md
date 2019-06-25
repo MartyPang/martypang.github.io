@@ -7,12 +7,12 @@ categories:
 tags: 
   - LeetCode
   - Backtracking
-last_modified_at: 2019-06-25T16:31:21-05:00
+last_modified_at: 2019-06-25T06:31:21-05:00
 ---
 
-
-
 回溯法作为五大常用算法（分治，动态规划，贪心，回溯，条件分支）之一，经常用来解决枚举问题或者优化问题。常规的做法是，增量地构建solution，如果不满足，则回退一步，尝试其他选择。举个简单的迷宫的例子。如下图，进入迷宫到达1后，我们面临两种选择，假设走了2，就从出口出去了。假设走了3，我们发现死路一条，于是回溯到1，重新选择。
+
+![backtrack](/images/20190625/backtrackeg.png){:  .align-center}
 
 回溯法是对所有解的解空间树应用DFS策略，从根节点出发不断向叶子节点前进。当添加上某一节点后不满足问题的解，则向上层回溯直到根节点。该过程可以用如下递归的伪代码表示：
 
@@ -148,5 +148,79 @@ class Solution {
 
 ## 手机号码生成的字母组合
 
+本题是LeetCode中等难度[17题](https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/)，题目要求给出一个手机号能代表的所有字母组合。
+
+> 给定一个由数字2-9组成的字符串，返回该数字能代表的所有字母组合。数字与字母的映射与手机九宫格一致。
+> Example:  
+&nbsp; &nbsp; &nbsp; &nbsp; Input: "23"  
+&nbsp; &nbsp; &nbsp; &nbsp; Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]  
+
+![backtrack](/images/20190625/keypad.png){:  .align-center}
+
+每次读取一个数字，选择该数字映射的一个字母往下搜索。读取完所有数字后，就得到一个valid字母组合。本题还有个点在于如何计算数字对应的字母。观察到只有数字`7`和数字`9`对应4个字母，其余数字都只对应3个字母。所以对8和9做特殊处理即可。由于涉及到对String的频繁操作，本solution用StringBuilder保存临时字母组合。
+
+```java
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<>();
+        if(digits == null || digits.length() == 0 || digits.indexOf("1") >= 0) return res;
+
+        StringBuilder sb = new StringBuilder();
+        backtrace(res, sb, 0, digits);
+        return res;
+    }
+
+    private void backtrace(List<String> res, StringBuilder phone, int level, String digits) {
+        // a valid phone
+        if(level == digits.length()) {
+            res.add(phone.toString());
+        }
+        else {
+            int cnt = (digits.charAt(level) == '9' || digits.charAt(level) == '7') ? 4 : 3;
+            int start;
+            if(digits.charAt(level) == '8') {
+                start = 19;
+            } else if (digits.charAt(level) == '9') {
+                start = 22;
+            } else {
+                start = (Integer.parseInt(digits.substring(level, level+1)) - 2) * 3;
+            }
+            for(int i = 0; i < cnt; i++) {
+                char c = (char)('a' + start + i);
+                phone.append(c);
+                backtrace(res, phone, level+1, digits);
+                phone.deleteCharAt(phone.length() - 1);
+            }
+        }
+    }
+}
+```
+
 # 排列问题
 
+排列问题代码跟组合问题差不多，不一样的地方在于排列需要使用全部的数字。这里简单贴一下代码。
+
+```java
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        backtrack(res, new ArrayList<>(), nums);
+        return res;
+    }
+
+    private void backtrack(List<List<Integer>> res, List<Integer> curList, int[] nums) {
+        if(curList.size() == nums.length) {
+            res.add(new ArrayList<>(curList));
+        }
+        else {
+            for(int i = 0; i < nums.length; ++i) {
+                if(curList.contains(nums[i])) continue;
+                curList.add(nums[i]);
+                backtrack(res, curList, nums);
+                curList.remove(curList.size() - 1);
+            }
+        }
+    }
+}
+
+```
