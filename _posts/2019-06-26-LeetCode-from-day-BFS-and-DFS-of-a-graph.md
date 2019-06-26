@@ -33,8 +33,8 @@ boolean[] visited = new boolean[n];
 
 ```java
 public class Graph {
-    private int vNum;
-    private List<Integer>[] adj;
+    private int vNum; //节点数目
+    private List<Integer>[] adj; //邻接表
 
     public Graph(int n) {
         vNum = n;
@@ -98,10 +98,18 @@ public void BFSTraverse() {
 }
 ```
 
-广度优先搜索的时间复杂度为$O(V+E)$，每个节点以及每条边都被访问一次。
+广度优先搜索的时间复杂度为$O(|V|+|E|)$，每个节点以及每条边都被访问一次。
 
 
 # 深度优先搜索
+
+DFS运用的其实是上一篇文章讲到的[回溯法](https://www.hytheory.com/algorithm/LeetCode-from-day-backtracking/)。它的基本步骤如下：
+- 从图的某个节点`v`出发，首先访问`v`；
+- 以`v`的第一个邻接节点`u0`作为新的节点，访问从`u0`出发的所有路径，回溯到`v`下一个未被访问的邻接节点；
+- 重复步骤2；
+- 若仍有节点未被访问（其他连通分支），则另选一个未被访问的节点重复以上3个步骤；
+
+DFS的递归写法如下，同样的，我们需要一个`visited`数组保存所有节点的访问情况。
 
 ```java
 private void dfsHelper(int v, boolean[] visited) {
@@ -127,8 +135,55 @@ public void DFSTravesal() {
 }
 ```
 
+递归DFS的复杂度分析。首先递归深度为节点数目$O(|V|)$，采用邻接表表示图时，查找所有节点邻接点的时间复杂度为$O(|E|)$。故总的时间复杂度为$O(|V|+|E|)$。
+
+非递归的DFS需要借助栈来实现，这里简单描述一下算法过程。i) 访问一个节点邻接的未访问，标记它，并且压入栈中；ii) 如果没有可访问的节点，则从栈中弹出一个节点；iii) 如果前两个步骤都无法执行，则完成DFS搜索。这与递归调用栈是一个道理。
+
 # 拓扑排序
+
+拓扑排序通常用来解决依赖图的问题。依赖图表示节点直接的依赖关系，比如数据库中的冲突依赖，表示并发事务之间的数据访问冲突，再比如先后依赖，先有鸡还是先有蛋，先起床再刷牙等等。拓扑排序就是根据这些依赖关系导出节点之间的一个顺序。值得注意的是，应用拓扑排序的图必须是有向无环图（DAG）。有环的图代表着循环依赖，两个节点代表的任务都无法顺利进行下去。对有向无环图G进行拓扑排序得到一个节点的线性序列$\mathcal{L}$，若$(u,v) \in E$，则u在$\mathcal{L}$中出现在v之前。
+
+DFS与BFS均可以用来实现图的拓扑排序。
 
 ## BFS实现
 
+BFS实现需要记录节点的入度信息，依次访问入度为0的节点，并且更新剩余节点的入度，直到所有节点被访问。按给定的边构造图的时候，记录每个节点的入度，在开始BFS之前，遍历indegree数组，将入度为0的节点先加入队列和拓扑排序结果。
+
+```java
+public void buildGraph(List<Integer>[] graph, int[] indegree, int[][]edges) {
+    for(int i = 0; i < edges.length; ++i) {
+        graph[edges[i][0]].add(edges[i][1]);
+        indegree[edges[i][1]]++;
+    }
+}
+
+public void topologicalSort(List<Integer> order, int vNum, int[][] edges) {
+    List<Integer>[] graph = new ArrayList[vNum];
+    for(int i = 0; i < vNum; ++i) {
+        graph[i] = new ArrayList<>();
+    }
+    int[] indegree = new int[vNum];
+    buildGraph(graph, indegree, edges);
+    
+    Queue<Integer> queue = new LinkedList<>();
+    for(int i = 0; i < vNum; ++i) {
+        if(indegree[i] == 0) {
+            queue.offer(i);
+            order.add(i);
+        }
+    }
+    
+    while(!queue.isEmpty()) {
+        int neighbor = queue.poll();
+        for(int n : graph[neighbor]) {
+            if(--indegree[n] == 0) {
+                queue.offer(n);
+                order.add(n);
+            }
+        }
+    }
+}
+```
+
 ## DFS实现
+
