@@ -45,6 +45,9 @@ public class Graph {
 }
 ```
 
+* 目录
+{:toc}
+
 # 广度优先搜索
 
 广度优先指的是从一个节点出发，先访问该节点的所有子节点，然后遍历每个子节点，访问子节点的子节点。一般用队列保存节点的子节点，节点`v`从队列中出队，`visited`标记为true之后，将`v`的所有邻居节点入队。
@@ -187,3 +190,78 @@ public void topologicalSort(List<Integer> order, int vNum, int[][] edges) {
 
 ## DFS实现
 
+根据DFS的搜索特性，假设我们记录将某个节点的所有子节点搜索完的时间`t`，按照`t`从大到小的顺序排列，得到的就是拓扑排序。由于在递归过程中，先完成子节点访问的节点`t`最小，故使用LinkedList结果，不断地在头部插入最小`t`对应的节点。也可以用数组，按照逆序输出也可得到结果。
+
+我们使用一个辅助函数来完成递归。
+
+```java
+public void topologicalSortByDFS(LinkedList<Integer> order) {
+    boolean[] visited = new boolean[vNum];
+    for(int i = 0; i < vNum; ++i) {
+        if(!visited[i]) {
+            dfsTopo(i, order, visited);
+        }
+    }
+}
+
+private void dfsTopo(int v, LinkedList<Integer> order, boolean[] visited) {
+    visited[v] = true;
+    for(int neighbor : adj[v]) {
+        if(!visited[neighbor]) {
+            dfsTopo(neighbor, order, visited);
+        }
+    }
+    order.addFirst(v);
+}
+```
+
+## Course Schedule II
+
+[Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)是LeetCode中等难度210题。题目要求在给定n门课程之间的依赖关系的前提下找到一个可能的学习顺序，使得能学完所有的课程。
+
+> 给定n门编号为0到n-1的课程，其中一些课程是另一些课程的预备课程，例如[0,1]表示如果你想修课程0，必须先修课程1。找到一个可以修完所有课程的顺序，若该顺序不存在，则返回一个空数组。
+> Example:  
+&nbsp; &nbsp; &nbsp; &nbsp; Input: 4, [[1,0],[2,0],[3,1],[3,2]]  
+&nbsp; &nbsp; &nbsp; &nbsp; Output: [0,1,2,3] or [0,2,1,3]
+
+题目其实很明显在提示拓扑排序，但是有两个要注意的地方。一是题目给定的依赖跟最后顺序的依赖是反的，比如`0->1`表示的是1先0后。所以在构造图的时候，边要反着指。二是图可能存在环，也就是无法导出拓扑序，算法返回前应该检测这种情况。
+
+```java
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] res = new int[numCourses];
+        List<Integer>[] graph = new ArrayList[numCourses];
+        for(int i = 0; i < numCourses; ++i) {
+            graph[i] = new ArrayList<>();
+        }
+        int[] degree = new int[numCourses];
+        for(int i = 0; i < prerequisites.length; ++i) {
+            // inverse edge
+            graph[prerequisites[i][1]].add(prerequisites[i][0]);
+            degree[prerequisites[i][0]]++;
+        }
+        //run BFS
+        Queue<Integer> queue = new LinkedList<>();
+        int cnt = 0;
+        for(int i = 0; i < numCourses; ++i) {
+            if(degree[i] == 0) {
+                queue.offer(i);
+                res[cnt++] = i;
+            }
+        }
+
+        while(!queue.isEmpty()) {
+            int course = queue.poll();
+            for(int p : graph[course]) {
+                if(--degree[p] == 0) {
+                    queue.offer(p);
+                    res[cnt++] = p;
+                }
+            }
+        }
+        return cnt == numCourses ? res : new int[0];
+    }
+}
+```
+
+搜索过程中，记录访问的课程数，返回结果前，检查是否所有的课程被访问到。如果不是，说明图中存在环。
