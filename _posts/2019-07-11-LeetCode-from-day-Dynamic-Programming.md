@@ -123,7 +123,7 @@ class Solution {
         for(int i = 1; i < nums.length; ++i) {
             prevMax = 0;
             for(int j = 0; j < i; ++j) {
-                if(nums[j] < nums[i]) {
+                if(nums[j] < nums[i])
                     prevMax = Math.max(dp[j], prevMax);
                 }
             }
@@ -139,14 +139,147 @@ class Solution {
 
 ## Longest Palindromic Substring
 
-```java
+本题是动态规划区间模型的应用。我们定义状态`dp(i,j)`表示从i位置到j位置的字串是否为回文字符串。显然可以推导出，`dp(i,j)=(dp(i+1,j-1) and Si==sj)`，即如果dp(i+1,j-1)是回文串，并且i位置和j位置的字符相同，那么dp(i,j)也是回文字符串。
 
+```java
+class Solution {
+    public String longestPalindrome(String s) {
+        if(s.length() < 2) return s;
+        int minIndex = 0, maxLen = 0;
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        for(int i = 0; i < s.length(); ++i) {
+            for(int j = 0; j <= i; ++j) {
+                dp[j][i] = s.charAt(j) == s.charAt(i) && (i - j < 3 || dp[j+1][i-1]);
+                if(dp[j][i] && i - j + 1 > maxLen) {
+                    maxLen = i - j + 1;
+                    minIndex = j;
+                }
+            }
+        }
+        return s.substring(minIndex, minIndex+maxLen);
+    }
+}
 ```
 
 ## Coin Change
 
+[找零钱](https://leetcode.com/problems/coin-change/)，由于可重复使用某一面额的硬币，是一个完全背包问题。
+
+> 给定几种不同面额的硬币coins和一个总数额amout，求出能组成amout的最少硬币数
+> Example:  
+&nbsp; &nbsp; Input: coins=[1,2,5], amount=11  
+&nbsp; &nbsp; Output: 3
+
+先给出二维数组的解法，再使用滚动数组去优化。
+
 ### 二维数组
+
+题中有两个变量，硬币的面额与构成的总数额，故我们可以定义状态`dp[i][j]`表示给定面额为coins[0], coins[1], ..., coins[i]的硬币，使用多少个可以构成数额`j`。状态转移我们可以分三种情况讨论。
+1. 第一行（`i==0`）
+也就是只能使用面额为coins[0]的硬币，这种情况下，我们判断`j%coins[i] == 0`是否成立，若成立则填入`j/coins[0]`的值。
+
+2. 第一列（`j==0`）
+即待构成的总数额为0，所以第一列全部填0，即0张任何面额的硬币均能构成总数额0。
+
+3. 其他（`i>0 && j>0`）
+这种情况我们又可以分三种情况：
+	- `coins[i]>j`，则直接使用上一行该列的值，因为`coins[i]`对构成j毫无帮助。`dp[i][j]=dp[i-1][j]`；
+	- `coins[i]==j`，则直接填入1，因为只需使用一个面值为`coins[i]`的硬币即可；
+	- `coins[i]<j`，则取`dp[i-1][j]`和`dp[i][j-coins[i]]+1`的较小者即可；
+后两种情况其实可以合并为一种，当`coins[i]==j`时，一定是`dp[i][j-coins[i]]+1`最小，因为`dp[i][0] = 0`。
+我们给出最终的实现代码：
+
+```java
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if(coins.length == 0) return -1;
+        if(amount == 0) return 0;
+        int[][] dp = new int[coins.length][amount+1];
+        for(int i = 0; i < coins.length; ++i) {
+            for(int j = 0; j < amount+1; ++j) {
+                dp[i][j] = amount+1;
+            }
+        }
+        dp[0][0] = 0;
+        for(int i = 1; i < amount+1; ++i) {
+            if(i >= coins[0]) {
+                dp[0][i] = Math.min(dp[0][i], dp[0][i - coins[0]]+1);
+            }
+        }
+        for(int j = 1; j < coins.length; ++j) {
+            dp[j][0] = 0;
+        }
+        for(int i = 1; i < coins.length; ++i) {
+            for(int j = 1; j < amount+1; ++j) {
+                if(j < coins[i]) { //面额大于amount
+                    dp[i][j] = dp[i-1][j];
+                }
+                else { //面额大于等于amount
+                    dp[i][j] = Math.min(dp[i-1][j], dp[i][j-coins[i]]+1);
+                }
+            }
+        }
+        return dp[coins.length-1][amount] >= amount+1 ? -1 : dp[coins.length-1][amount];
+    }
+}
+```
+算法的时间复杂度为$O(mn)$，其中`m`为硬币的种类，`n`为amount。空间复杂度为$O(mn)$。
 
 ### 一维数组
 
+利用滚动数组，我们可以优化上述二维数组的解法。定义状态`dp[i]`为构成数额`i`所需要的最少的硬币数量，从`dp[0]`推导到`dp[amount]`。对于每一个状态，我们都遍历`coins`数组，判断每个硬币的使用能否得到一个更小的数量。
+
+```java
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if(coins.length == 0) return -1;
+        if(amount == 0) return 0;
+        int[] dp = new int[amount+1];
+        for(int i = 0; i < amount + 1; ++i) {
+            dp[i] = amount + 1;
+        }
+        dp[0] = 0;
+        for(int i = 1; i <= amount; ++i) {
+            for(int j = 0; j < coins.length; ++j) {
+                if(coins[j] <= i) {
+                    dp[i] = Math.min(dp[i], dp[i-coins[j]]+1);
+                }
+            }
+        }
+        return dp[amount] == amount + 1 ? -1 : dp[amount];
+    }
+}
+```
+
 ## Dungeon Game
+
+[地牢游戏](https://leetcode.com/problems/dungeon-game/)为LeetCode困难难度174题。
+
+> 地牢由M x N个房间组成dungeon[][]，其实K最初位于左上角的房间，骑士只能向右或者向下移动。每个房间有一个数值，表示K进入房间失去的血量或者是获得的血量，由数值正负决定。如果K的血量在任何房间降至0或以下，立即死亡。要求编写一个函数确定骑士一开始的最低血量。
+
+![dungeon](/images/20190711/dungeon.png){:  .align-center}
+
+本题的解法采用从最终状态往初始状态推导的方法，即骑士K在右下角房间，只能往上或者往左走。我们用`dp[i][j]`定义K在`[i,j]`处的血量，在任何坐标，dp至少为1。最终状态的血量为`max{1, 1-dungeon[i][j]}`。那么最后一列的值为`max{1, dungeon[i+1][j]-dungeon[i][j]}`，例如上图中`dp[1][2] = 5`，表示进入房间`dp[1][2]`时候，骑士至少还有5点血。最后一行的值同理为`max{1, dungeon[i][j+1]-dungeon[i][j]}`。而对于其余房间，因为我们是倒推的，对于房间`[i,j]`，骑士只能从`[i+1,j]`或者`[i,j+1]`来的。所以`dp[i][j] = max{1, min{dungeon[i+1][j]-dungeon[i][j],dungeon[i][j+1]-dungeon[i][j]}}`。最终返回`dp[0][0]`即可。具体实现不必定义新的dp数组，在原数组上该就行了。
+
+```java
+class Solution {
+    public int calculateMinimumHP(int[][] dungeon) {
+        if(dungeon == null || dungeon.length == 0 || dungeon[0].length == 0) return 0;
+        for(int i = dungeon.length - 1; i >= 0; --i) {
+            for(int j = dungeon[0].length - 1; j >= 0; --j) {
+                if(i == dungeon.length - 1 && j == dungeon[0].length - 1) {
+                    dungeon[i][j] = Math.max(1, 1 - dungeon[i][j]);
+                } else if(j == dungeon[0].length-1) {
+                    dungeon[i][j] = Math.max(1, dungeon[i+1][j] - dungeon[i][j]);
+                } else if(i == dungeon.length-1) {
+                    dungeon[i][j] = Math.max(1, dungeon[i][j+1] - dungeon[i][j]);
+                } else {
+                    dungeon[i][j] = Math.max(1, Math.min(dungeon[i+1][j], dungeon[i][j+1]) - dungeon[i][j]);
+                }
+            }
+        }
+        return dungeon[0][0];
+    }
+}
+```
+
