@@ -83,3 +83,22 @@ class Solution {
 后序遍历也可以做，但是中序遍历不行。另外空左节点与空右节点可以统一用"null"表示，不作区分也可。
 分别遍历`s`与`t`时间复杂度为$O(n+m)$，`indexOf`复杂度为$O(n \times n)$，所以总的时间复杂度为$O(n+m+n \times m)$。当然判断子串也可以采用KMP这种复杂度为$O(m+n)$的方法。空间复杂度为两个递归栈深度的和$O(n+m)$。可以看到这种方式更加耗费内存，对于节点数多的树不太适合。
 
+
+## 补充
+
+如果题目要求判断树t是否为树s的子结构呢（剑指offer面试题26）？也就是我们不需要比较到s的根节点，假设空树不是任何树的子结构。只需对解法一稍作改动即可。假设s或者t有一者为空，那么t一定不是s的子树。在两者都不为空的前提下，需要判断t是否为s的子结构。判断函数`isEqual`首先检查t是否为空，若为空，说明该条路径已经比较完毕，都是相等的，则返回true。在t不为空的前提下，若s为空，则直接返回false。
+
+```java
+class Solution {
+    public boolean isSubtree(TreeNode s, TreeNode t) {
+        if(s == null || t == null) return false;
+        return isEqual(s, t) || isSubtree(s.left, t) || isSubtree(s.right, t);
+    }
+
+    private boolean isEqual(TreeNode s, TreeNode t) {
+        if(t == null) return true;
+        if(s == null) return false;
+        return s.val == t.val && isEqual(s.left, t.left) && isEqual(s.right, t.right);
+    }
+}
+```
