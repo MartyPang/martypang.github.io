@@ -35,13 +35,13 @@ $gcd(0,n)=n$
 
 ```java
 int gcd(int m, int n) {
-  int tmp;
+  int r;
   while(n != 0) {
-    tmp = m%n;
+    r = m%n;
     m=n;
     n=r;
   }
-  return a;
+  return r;
 }
 ```
 
