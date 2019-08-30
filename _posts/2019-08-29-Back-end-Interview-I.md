@@ -180,7 +180,7 @@ JDK1.8之后，当链表大于8后，使用红黑树，减少搜索时间。
 9. ThreadLocalMap的key为什么要设置为弱引用？
   线程可以存储多个ThreadLocal变量，假设线程维护很多ThreadLocal，并且entry的key与threadlocal对象之间是强引用关系，当threadlocal的引用（栈中）置为null后，threadlocal并不会被GC回收，可能会造成堆上的OOM。而弱引用的作用就是关联的对象在下一次GC时会被回收，当ThreadLocal变量的强引用释放后，Entry的弱引用的key在下一次GC就会被回收。
 
-![threadlocalmap](/images/threadlocalmap.jpg)
+![threadlocalmap](/images/20190829/threadlocalmap.jpg)
 
 10. ThreadLocal中的内存泄漏问题。
 key回收后，value并没有被回收，而这块内存永远不会被访问到，所以存在内存泄漏。如何避免这个问题？在调用ThreadLocalMap的get和set方法时，把key为null的的entry的value设置为null，或者调用remove。但是当不再去调用set get remove时，将导致内存泄漏。
