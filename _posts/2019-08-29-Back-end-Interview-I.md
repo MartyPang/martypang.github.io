@@ -150,49 +150,87 @@ JDK1.8之后，当链表大于8后，使用红黑树，减少搜索时间。
   - AbortPolicy，被拒绝时，抛出RejectExecutionException异常；
   - CallerRunsPolicy，不进入线程池，任务由调用者线程去执行；
 
-3. volatile关键字的作用？
+3. ThreadPoolExecutor内部的工作原理是怎样的？
+总结起来就是：当poolSize小于corePoolSize时，创建新的线程执行任务；当poolSize大于corePoolSize，等待队列未满时，则任务进入等待队列；当poolSize大于corePoolSize并且小于maximumPoolSize，且等待队列已满，则创建新的线程处理任务；当poolSize大于maximumPoolSize，且等待队列已满，则根据拒绝策略来处理该任务；另外，每个线程执行完任务后不会立即退出，而是去检查等待队列里是否还有线程任务，如果在keepAliveTime里等不到，线程被回收。
+
+4. volatile关键字的作用？
   JVM中最轻量级的同步机制，具有可见性和有序性两种特性。对一个volatile变量的读总是能看到任意线程对这个变量最新的写入，线程在工作内存中修改该变量后立即更新到主存上。lock前缀指令生成一个内存屏障，保证重排序的代码不会越过内存屏障
 
-4. 线程加锁有哪些方式？synchronized和lock的区别？
+5. 线程加锁有哪些方式？synchronized和lock的区别？
   加锁方式有synchronized，各种Lock。synchronized是Java关键字，在jvm层面上，通过对象头来实现加锁释放锁。Java中每一个对象都可以作为锁，synchronized修饰普通成员方法，锁是当前对象实例；synchronized修饰静态方法，锁是当前类的class对象；同步方法块，锁是synchronized括号里的对象。当一个线程访问同步代码块时，首先需要获得锁，退出或者抛出异常时必须要释放锁。同步代码块底层使用monitorenter和moniterexit指令实现。
   锁有读写锁，可重入锁等，是一个类。
   区别：synchronized无法判断锁状态，lock可以用trylock判断能不能获得锁；线程等待lock释放的过程可以用interrupt中断等待，而synchronizd只能等待锁释放。synchronized以发生异常的时候会自动释放锁，而lock不行。lock可以实现绑定多个条件，和公平锁，synchronized锁是非公平锁。
 
-5. 介绍Java内存模型
+6. 介绍Java内存模型
   ![JMM](/images/20190829/jmm.png){:	.align-center}
   Java内存模型屏蔽系统和硬件的差异，主要划分为主内存和工作内存两种，分别对应物理内存，寄存器和高速缓存。每条线程拥有各自的工作内存，工作内存中的变量是主内存中的一份拷贝。
 
-6. Java如何实现线程？
+7. Java如何实现线程？
   - 继承Thread类创建线程
   - 实现Runnable接口
   - 实现Callable接口
   - 使用线程池，ThreadPoolExecutor
 
-7. Java内存模型如何保证一致性？
+8. Java内存模型如何保证一致性？
   提供三个关键字由程序员控制，分别是：
   final：构造函数退出时，final域的值是被保证对其他线程可见的；
   volatile：可见性，屏蔽指令重排序；
   synchronized：原子性，可见性，屏蔽指令重排序；
   
-8. ThreadLocal到底有什么用？
+9. volatile修饰的long或double类型能保证原子性。
+对于64位的long和double，如果没有volatile修饰，一次写入会被分为两次分别针对高32位低32位的写操作，可能会导致高低32位被不同线程修改的问题。如果用volatile修饰，读写都是原子的。对64位的引用地址的读写也都是原子的。
+
+### ThreadLocal
+  
+1. ThreadLocal到底有什么用？
   每个线程会在堆山开辟一块工作内存，而ThreadLocal就是线程工作内存中的一小块内存，用于存储线程独享的数据。相当于数据存储在线程本地，读写效率高，不必在主内存和工作内存之间来回复制。
   
-9. ThreadLocalMap的key为什么要设置为弱引用？
+2. ThreadLocalMap的key为什么要设置为弱引用？
   线程可以存储多个ThreadLocal变量，假设线程维护很多ThreadLocal，并且entry的key与threadlocal对象之间是强引用关系，当threadlocal的引用（栈中）置为null后，threadlocal并不会被GC回收，可能会造成堆上的OOM。而弱引用的作用就是关联的对象在下一次GC时会被回收，当ThreadLocal变量的强引用释放后，Entry的弱引用的key在下一次GC就会被回收。
 
 ![threadlocalmap](/images/20190829/threadlocalmap.jpg)
 
-10. ThreadLocal中的内存泄漏问题。
+3. ThreadLocal中的内存泄漏问题。
 key回收后，value并没有被回收，而这块内存永远不会被访问到，所以存在内存泄漏。如何避免这个问题？在调用ThreadLocalMap的get和set方法时，把key为null的的entry的value设置为null，或者调用remove。但是当不再去调用set get remove时，将导致内存泄漏。
 另一种情况就是ThreadLocal变量为static时，线程结束时，static变量不一定会被回收，更容易导致内存泄漏。
 
-11. 多线程内存泄漏问题？
+4. 多线程内存泄漏问题？
 如3，value的生命周期最长可以跟线程一致，线程不被回收，就存在内存泄漏的问题。当使用线程池时，线程结束后，放回线程池中不被销毁，线程一直不被使用或者不再调用get set方法，就会内存泄漏。
 
 
-12. ThreadLocal使用场景。
+5. ThreadLocal使用场景。
 最常见的场景使用ThreadLocal解决数据库连接或者session管理等。
 
+### CAS详解
+
+1. CAS是什么？
+CAS（compareAndSwap）是一条CPU并发原语，与悲观锁相对，是一种乐观的并发放是，可以原子地完成以下操作：判断内存某个地址的值是否为预期值，如果是则更新该值。
+
+2. Java实现CAS，其底层原理是什么？
+CAS依赖于CPU提供的cas指定，如Intel的cmpxchg指令，由于Java无法直接访问底层系统，其依赖于Unsafe提供的native方法实现。以`AtomicInteger`为例，cas一定与volatile变量搭配使用，保证每次拿到主内存中的最新值。unsafe根据value在内存中的偏移地址获取数据，不断循环直至CAS成功。
+```java
+public class AtomicInteger extends Number implements java.io.Serializable {
+    private static final long serialVersionUID = 6214790243416807050L;
+
+    // setup to use Unsafe.compareAndSwapInt for updates
+    private static final Unsafe unsafe = Unsafe.getUnsafe();
+    private static final long valueOffset;
+
+    static {
+        try {
+            valueOffset = unsafe.objectFieldOffset
+                (AtomicInteger.class.getDeclaredField("value"));
+        } catch (Exception ex) { throw new Error(ex); }
+    }
+
+    private volatile int value;
+}
+```
+
+3. CAS存在什么缺陷或者问题？如何解决？
+  - 长时间自旋开销大，CAS一直失败；
+  - 只能保证对一个共享变量的原子操作，多个共享变量的操作智能使用加锁来保证；JDK1.5之后，可以使用AtomicReference类保证引用对象之间的原子性，把多个变量放在一个对象中进行CAS操作；
+  - 存在ABA问题，即一个线程在获取当前变量时，另外线程两次修改改值，先变为B在变为A，第一个线程仍旧认为CAS成功，实际有线程在改变它。解决方案是JDK1.5之后提供一个AtomicStampReference，数据加上一个版本号；
   
 # JVM
 
