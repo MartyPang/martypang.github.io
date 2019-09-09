@@ -100,12 +100,20 @@ JDK1.8之后，当链表大于8后，使用红黑树，减少搜索时间。
 
 3. HashMap的put与get的过程是怎样的？
    get首先将key hash以后获得相应的桶，如果桶为null，则直接返回null。判断桶的第一个位置，如果key为查询的key则直接返回node；如果第一个节点不匹配，则根据节点类型（红黑树 or 链表），获取key对应的node。
-   put同样判断桶数组是否为空，若为空则进行初始化。再获取hash对应的桶，若桶为空则表明没有hash冲突，直接初始化一个node即可。若不为空，则比较第一个节点的key与put的key是否相同，相同表明该节点已经存在，直接更新值。否则根据第一个节点的类型（红黑树/链表）决定调用什么方法进行插入。成功put之后判断是否需要resize。
+   put同样判断桶数组是否为空，若为空则进行初始化。再获取hash对应的桶，若桶为空则表明没有hash冲突，直接初始化一个node即可。若不为空，则比较第一个节点的key与put的key是否相同，相同表明该节点已经存在，直接更新值。否则根据第一个节点的类型（红黑树/链表）决定调用什么方法进行插入，若为链表，遍历链表，若不存在key对应的节点，则在尾部插入新节点。成功put之后判断是否需要resize。
 
 4. ConcurrentHashMap的put与get流程。
    get基本与HashMap一个流程；
    put首先判断桶数组是否为空，是否需要初始化。若不为空，则根据哈希值获取相应桶的第一个节点，如果第一个节点为空，直接通过原子操作插入即可，无需锁。如果发现第一个节点哈希为-1，说明map正在resize。如果以上情况均不满足，那么就需要使用synchronized对第一个节点上锁。
    
+5. HashMap扩容的时机以及具体的做法？
+当`hashmap.size >= capacity * loadfactor`时，HashMap进行resize操作。具体步骤如下：
+  - 扩容，new一个新的entry数组，长度是原数组的两倍；
+  - 1.7中rehash，遍历原entry数组，把所有entry重新hash到新数组，用的是头插法，而1.8中，并没有重新rehash，而是原始位置加原数组长度得到新位置，是否要移动由`e.hash & oldCap`的最高位决定，使用尾插法。
+
+6. HashMap的大小为什么要2的幂次？
+计算新位置的时候`e.hash & (capacity -1)`，其中`capacity-1`的二进制全是1，与hash进行与运算时，相当于对capacity取模，能够充分散列，减少冲突。
+
 ## 反射机制
 
 1. 简单介绍一下java的反射机制？反射在哪些地方有应用场景？
@@ -136,10 +144,13 @@ JDK1.8之后，当链表大于8后，使用红黑树，减少搜索时间。
    newScheduledThreadPool：支持定时及周期性任务
    newSingleThreadExecutor：唯一的工作线程执行任务，保证任务的按照指定的顺序执行。
    尽量不适用Executors创建线程池，默认无界的队列，可能会导致OOM。使用ThreadPoolExecutor创建线程池有7个参数：
-   - corePoolSize，线程池长期维持的线程数；
-   - maximumPoolSize，最大线程数；
+   - corePoolSize，线程池长期维持的线程数，当提交一个任务到线程池时，线程池会创建一个现成来执行任务，即使有其他空闲的基本线程，等到需要执行的任务数大于线程池基本大小时，就不再创建；
+   - maximumPoolSize，最大线程数，如果任务队列满了，并且已创建的线程数小于最大线程数，则线程池再创建新的线程执行任务，对无界的任务队列这个参数无效；
    - keepAliveTime、unit，超过corePoolSize的线程的空闲时常，超过这个时间，线程会被回收；
-   - workQueue，任务的队列；
+   - workQueue，任务的队列，用于保存等待执行的任务的阻塞队列，有以下几种选择：
+     - ArrayBlockingQueue，基于数组结构的有界阻塞队列，FIFO；
+     - LinkedBlockingQueue，基于链表的阻塞队列，FIFO，newFixedThreadPool使用该队列；
+     - SynchronousQueue，无容量，对队列的插入操作必须等另一个线程消费（读取/移除）操作，否则插入一直处于阻塞状态，newCachedThreadPool使用这个队列；
    - threadFactory，新线程的产生方式
    - handler，拒绝策略，超过队列大小，如何处理新来的任务；
 
@@ -180,8 +191,10 @@ JDK1.8之后，当链表大于8后，使用红黑树，减少搜索时间。
 9. volatile修饰的long或double类型能保证原子性。
 对于64位的long和double，如果没有volatile修饰，一次写入会被分为两次分别针对高32位低32位的写操作，可能会导致高低32位被不同线程修改的问题。如果用volatile修饰，读写都是原子的。对64位的引用地址的读写也都是原子的。
 
+10. CountDownLatch 和 CyclicBarrier 有什么区别？
+
 ### ThreadLocal
-  
+
 1. ThreadLocal到底有什么用？
   每个线程会在堆山开辟一块工作内存，而ThreadLocal就是线程工作内存中的一小块内存，用于存储线程独享的数据。相当于数据存储在线程本地，读写效率高，不必在主内存和工作内存之间来回复制。
   
@@ -289,6 +302,12 @@ Garbage-First，从JDK9开始G1为默认的垃圾收集器。G1将堆划分为�
   jps获得进程号；
   top pid获得本进程中的所有线程
   jstack命令查看当前java进程的堆栈状态
+  
+9. 哪些对象可以作为GC Root？
+  - 虚拟机栈（栈帧中的局部变量表）中引用的对象；
+  - 方法区中类静态属性引用的对象；
+  - 方法区中常量引用的对象；
+  - 本地方法栈中native方法引用的对象；
 
 ## 类加载
 
