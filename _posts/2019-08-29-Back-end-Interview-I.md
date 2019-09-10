@@ -212,7 +212,7 @@ key回收后，value并没有被回收，而这块内存永远不会被访问到
 
 
 5. ThreadLocal使用场景？
-最常见的场景使用ThreadLocal解决数据库连接或者session管理等。
+  最常见的场景使用ThreadLocal解决数据库连接或者session管理等。
 
 ### CAS详解
 
